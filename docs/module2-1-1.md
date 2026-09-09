@@ -166,15 +166,15 @@ The choice follows from the biological question. Quantifying gene expression or 
 
 Unlike DNA and RNA, proteins and metabolites cannot be sequenced as polymers. Instead, we use mass spectrometry to measure molecules by their mass-to-charge ratio (m/z) and signal intensity. In proteomics, proteins are first digested into peptides, whose fragmentation spectra can be matched to known sequences to identify and quantify the parent protein. In metabolomics, small molecules are measured directly. In both cases the output is **intensities**: signal measured as a function of m/z.
 
-PLACEHOLDER - REPLACE THIS WITH OUR OWN DIAGRAM of the workflow — extract, digest, LC separation, ionisation, MS acquisition, spectrum output
+![](figs/2-1_mass_spec.png){width=100%}
 
-![](figs_m2/02_proteomicsWorkflow.png){width=100%}
+<small>Illustration of a bottom-up proteomics workflow. Proteins are extracted and digested into peptides, separated over time by liquid chromatography, ionised, and measured by the mass spectrometer according to their mass-to-charge ratio (m/z). The resulting spectrum (signal intensity vs. m/z) is matched against a reference database to infer peptide and protein identity.</small>
 
 The most common proteomics workflow is called "bottom-up proteomics, where proteins are extracted and digested into shorter peptide fragments before measurement. 
 
 In the bottom-up proteomics workflow, proteins are extracted from the sample and digested into shorter peptide fragments, typically using trypsin, which cleaves at specific amino acid residues. This digestion step is what distinguishes proteomics from sequencing workflows. The resulting peptides are separated over time by liquid chromatography (LC), which spreads them across a gradient so they reach the instrument at different retention times rather than all at once. They are then ionised and introduced into the mass spectrometer, where they are measured according to their m/z. The output is a spectrum: signal intensity on one axis, m/z on the other. Peptide identity is inferred by matching observed spectra against a reference database of theoretical fragmentation patterns.
 
-!!! tip "Metabolomics takes a similar path"
+!!! tip "Metabolomics shares similar steps"
     Because metabolites are small molecules, there is no need for a digestion step. For LC-MS or GC-MS metabolomics the workflow proceeds directly from extraction to separation, ionisation, and measurement. 
     
     Metabolite identification relies on matching observed m/z values and fragmentation patterns against spectral libraries, though library coverage remains incomplete for many metabolite classes.
