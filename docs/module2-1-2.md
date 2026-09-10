@@ -84,7 +84,7 @@ Which variables to record, and who records them, will be discussed in a later se
 
 ---
 
-### Randomisation: for variation you cannot name
+### Randomisation to avoid unknown variation
 
 Randomisation is applied in two steps of experimental design: 
 
@@ -131,7 +131,7 @@ A temperature gradient across a plate is the kind of factor that goes unrecorded
 
 ---
 
-### Blocking: for variation you can name
+### Blocking to manage known sources of Variation
 
 Blocking addresses factors known to vary before processing begins. Rather than relying on chance to distribute them, balance is built into the allocation deliberately.
 
@@ -158,7 +158,7 @@ A **shared reference sample** — a pooled aliquot prepared from the study sampl
 
 ---
 
-## Why design is better than correction
+## Design, correction, and interpretation
 
 In an ideal study, confounding and batch effects are prevented at the design stage. Samples are allocated so that biological groups are distributed across known sources of variation, important covariates are recorded, and no technical factor becomes identical to the comparison of interest.
 

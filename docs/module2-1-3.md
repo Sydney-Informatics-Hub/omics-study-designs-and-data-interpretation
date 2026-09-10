@@ -6,12 +6,12 @@
     - Identify the biological, technical, and contextual variables that should be recorded for a given study.
     - Articulate why unrecorded variables cannot be recovered and how this constrains interpretation.
 
-Section 2.1.1 addressed what to measure; Section 2.1.2 addressed how samples are allocated across processing conditions. This section covers two decisions that determine whether the resulting measurements can be interpreted: whether technical variation is characterised and controlled, and whether the contextual information needed to explain the data is recorded. Both share a critical property — neither can be addressed retrospectively. A reference sample that was never included and a variable that was never recorded leave identical traces in the data: an unexplained pattern that cannot be resolved.
+[Section 2.1.1](module2-1-1.md) addressed what to measure; [Section 2.1.2](module2-1-1.md) addressed how samples are allocated across processing conditions. This section covers two decisions that determine whether the resulting measurements can be interpreted: whether technical variation is characterised and controlled, and whether the contextual information needed to explain the data is recorded. Both share a critical property — neither can be addressed retrospectively. A reference sample that was never included and a variable that was never recorded leave identical traces in the data: an unexplained pattern that cannot be resolved.
 
-??? tip "Consideration 8: Pseudoreplication and the unit of replication" 
+??? tip "[Consideration 8](module1-2-4.md#consideration-8-computational-and-analytical-controls): Pseudoreplication and the unit of replication" 
     Only biological replicates (independent samples from the population) contribute to statistical power and n. Technical replicates are repeated measurements of the same sample; they characterise measurement consistency but do not represent additional independent observations. Conflating the two inflates the apparent sample size and can produce false confidence in the precision of an estimate.
 
-??? tip "Consideration 9: Metadata completeness"
+??? tip "[Consideration 9](module1-2-5.md#consideration-9-metadata-completeness): Metadata completeness"
     Variables not recorded at the time of collection cannot be recovered afterwards. Recording a variable that turns out to be irrelevant costs almost nothing; but missing one that turns out to matter is a permanent gap.
 
 
@@ -52,19 +52,23 @@ How this is applied varies by platform:
 
 Like blocking design explained in section 2.1.2, this only works prospectively. The reference material must be prepared and aliquoted before processing begins.
 
-!!! question "Activity: When is technical replication warranted?"
+!!! question "Activity: Acquisition mode and technical replication"
 
-    A DIA proteomics study is measuring 80 plasma samples across four mass spectrometry injection batches over two weeks. Which of the following best describes the role of technical replication in this design?
+    Recall from the [acquisition mode decision](module2-1-1.md#decision-2-acquisition-mode) that data-independent acquisition (DIA) fragments ions across fixed m/z windows, rather than selecting only the most abundant ions. This gives more consistent sampling across runs, but the instrument signal can still drift over time.
+
+    A researcher is planning a DIA proteomics study with 80 plasma samples measured across four batches over two weeks. They want to track whether the instrument signal changes during acquisition.
+
+    Which design choice would best help them separate instrument drift from biological differences between samples?
 
     - A. Technical replicates are not needed because DIA is a highly reproducible platform
-    - B. A subset of samples should be measured twice to increase the effective sample size
-    - C. A pooled reference sample should be injected at regular intervals across all four batches to track instrument drift and anchor between-batch normalisation
-    - D. Technical replicates should be added at the analysis stage if a batch effect is detected in the PCA plot
+    - B. Measure a subset of study samples twice and treat them as extra biological replicates
+    - C. Inject the same pooled reference sample at regular intervals across all four batches
+    - D. Wait until analysis, then add technical replicates if a PCA plot shows batch structure
 
     ??? example "Answer"
-        **C.** Because its composition does not change, variation in its measurements across the run reflects instrument drift rather than biology, and that signal can be used to normalise the study samples.
+        **C.** A pooled reference sample has the same biological composition each time it is measured. If its signal changes across batches or over time, that change reflects technical variation, such as instrument drift, rather than biology. This gives the analysis a shared reference for assessing and correcting between-batch differences.
 
-        A is incorrect because run-to-run variation in mass spectrometry is substantial enough that technical variance can rival biological effect sizes, particularly across multi-week acquisition. B confuses technical and biological replication — measuring the same sample twice does not add to *n*. D is the most common mistake: technical replication must be designed in from the start, and a PCA plot showing batch structure cannot be corrected without a reference sample that was never included.
+        A is incorrect because run-to-run variation in mass spectrometry is substantial enough that technical variance can rival biological effect sizes, particularly across multi-week acquisition. B is incorrect because repeated measurements of the same sample are technical replicates, not additional biological replicates. D is incorrect because technical replication must be included before the samples are measured; it cannot be added after batch structure is detected.
 
 ---
 
