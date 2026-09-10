@@ -20,7 +20,7 @@ The figure below connects these five molecular layers through the central dogma 
 
 ![](figs/1-1_centraldogma.png){width="100%"}
 
-Each layer captures a different slice of biology, and no single layer gives the whole picture. To make that concrete, we will follow a single clinical question through all five layers.
+??? note "Layers overlap: the choice is fit, not exclusivity" Most questions can be approached from more than one layer. The lists below show what each layer is best suited to answer, not what it alone can answer.
 
 !!! question "Research study scenario: unexplained heart failure" A population of patients present to hospital with heart failure and the underlying cause is unclear. We will ask the same question at each molecular layer: ***what is driving these patients' heart failure?***
 
@@ -67,7 +67,13 @@ A gene's presence tells us nothing about whether it is transcribed, how much pro
 ??? note "The genome in our research question"       
     Blood derived DNA from our heart failure patients can be screened for inherited variants in genes with established roles in cardiomyopathy. Whole genome or whole exome sequencing can identify rare pathogenic variants. For example, a truncating mutation in *TTN* (which encodes titin, the largest protein in the sarcomere and a major structural component of cardiac muscle) or a missense variant in *MYH7* (beta myosin heavy chain, the primary motor protein driving cardiac contraction). Variants in these genes are among the most common monogenic causes of dilated cardiomyopathy.
 
-    Genomic analysis can also identify variants in non-coding regulatory regions that alter gene expression rather than protein sequence, and copy number variants that affect gene dosage. In a cohort study, comparing variant frequencies between patients and healthy controls can identify genomic loci associated with disease susceptibility or severity.
+- **What we learned:** a subset of patients carry pathogenic variants 
+  in sarcomere genes, providing a potential molecular explanation for 
+  their cardiac dysfunction.
+- **What we still don't know:** whether those variants are penetrant 
+  in these individuals not all carriers develop disease and whether 
+  patients without identified variants have a different underlying cause that genomics alone cannot reveal.
+
 
     - **What we learned:** a subset of patients carry pathogenic variants 
     in sarcomere genes, providing a potential molecular explanation for 
@@ -144,9 +150,8 @@ RNA abundance does not reliably predict protein abundance. Post-transcriptional 
 ??? note "The transcriptome in our research question"     
     Moving from the epigenome to the transcriptome takes us from accessibility to observed activity. Measuring the transcriptome of failing cardiac tissue tells us which genes are up or downregulated relative to healthy myocardium, which signalling pathways, fibrosis, inflammation, hypertrophy, are engaged, and which isoforms are being produced from genes such as *TTN*, where isoform switching between the compliant fetal N2BA isoform and the adult N2B isoform has direct mechanical consequences for cardiac function.
 
-    - **What we learned:** stress-response and remodelling genes are actively transcribed; fibrosis and hypertrophy pathways are upregulated; isoform shifts in structural genes are detectable and functionally relevant.
-    - **What we still don't know:** whether those transcripts are being translated into functional protein at the expected levels, and whether the resulting proteins are correctly localised and active within the sarcomere.
-
+- **What we learned:** stress-response and remodelling genes are actively transcribed; fibrosis and hypertrophy pathways are upregulated; isoform shifts in structural genes are detectable and functionally relevant.
+- **What we still don't know:** whether those transcripts are being translated into functional protein at the expected levels, and whether the resulting proteins are correctly localised and active within the sarcomere.
 
 ------------------------------------------------------------------------
 
@@ -251,9 +256,9 @@ The ambition is a global view of a biological layer, rather than the targeted me
 !!! question "Walk the layers"    
     Pick the broad question closest to your field, or reinterpret the example using an organism or system you work with. These examples represent high-level biological questions rather than specific studies, and the same design principles apply across systems.
 
-    Walk through the molecular layers and decide how you would approach the question.
+Walk through the molecular layers and decide how you would approach the question.
 
-    In your group, discuss:
+In your group, discuss:
 
     1. **Which molecular layer would you start with, and why?**
     2. **What would this layer tell you, and what would it miss?**
@@ -263,46 +268,44 @@ The ambition is a global view of a biological layer, rather than the targeted me
     <!-- 4. **Budget check:** you can measure only one molecular layer 
     initially. What evidence would convince you to add a second? -->
 
-    **Report back:** your chosen layer, what another layer might 
-    have revealed, and one assumption behind your choice.
+<!-- 4. **Budget check:** you can measure only one molecular layer 
+   initially. What evidence would convince you to add a second? -->
 
-    ??? example "Clinical / human disease"
+**Report back:** your chosen layer, what another layer might 
+have revealed, and one assumption behind your choice.
 
-        **What drives progression from a treatable tumour to one that 
-        resists therapy?**
+??? example "Clinical / human disease"
 
-        Consider: where would you sample from, when in the disease 
-        course, and what would each molecular layer contribute to 
-        understanding progression?
+    **What drives progression from a treatable tumour to one that 
+    resists therapy?**
 
-    ??? example "Wildlife / infectious disease"
+    Consider: where would you sample from, when in the disease 
+    course, and what would each molecular layer contribute to 
+    understanding progression?
 
-        **Why do some populations tolerate an infectious disease while 
-        others suffer severe disease from the same pathogen?**
+??? example "Wildlife / infectious disease"
 
-        Consider: is this a host question (immune response, genetic 
-        resistance), a pathogen question (strain, virulence factors), 
-        or both? Use any host–pathogen system relevant to your field.
+    **Why do some populations tolerate an infectious disease while 
+    others suffer severe disease from the same pathogen?**
 
-    ??? example "Aquaculture / production biology"
+    Consider: is this a host question (immune response, genetic 
+    resistance), a pathogen question (strain, virulence factors), 
+    or both? Use any host–pathogen system relevant to your field.
 
-        **Why do some farmed fish grow faster than others despite 
-        receiving the same diet?**
+??? example "Aquaculture / production biology"
 
-        Consider: if diet is held constant, what could explain the 
-        variation? Genetics, developmental history, physiology, gut 
-        microbes? Which layer would you measure first, and how would 
-        you sample to make the comparison meaningful?
+    **Why do some farmed fish grow faster than others despite 
+    receiving the same diet?**
 
-    ??? example "Plant / environmental stress"
+    Consider: if diet is held constant, what could explain the 
+    variation? Genetics, developmental history, physiology, gut 
+    microbes? Which layer would you measure first, and how would 
+    you sample to make the comparison meaningful?
 
-        **How does a crop plant respond to acute environmental stress, 
-        and what makes some varieties more tolerant than others?**
+??? example "Plant / environmental stress"
 
-        Consider: the stress could be drought, heat, or salinity, pick 
-        whichever fits your system. The response happens fast, over 
-        hours to days. Which layers capture that timescale, and which 
-        are too slow or too stable to see it?
+    **How does a crop plant respond to acute environmental stress, 
+    and what makes some varieties more tolerant than others?**
 
 <!--
 
