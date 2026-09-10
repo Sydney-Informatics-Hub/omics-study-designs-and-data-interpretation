@@ -231,7 +231,9 @@ In **data-dependent acquisition (DDA)**, the instrument first takes a survey sca
 
 In **data-independent acquisition (DIA)**, the instrument fragments all ions within predefined m/z windows, regardless of abundance. Every ion in every window is sampled at every cycle, giving more consistent coverage across runs. The trade-off is more complex spectra that require specialised software to interpret.
 
-PLACEHOLDER DIAGRAM COMPARING THE 2
+![](figs/2-1_dda_dia.png){width=100%}
+
+<small>Comparison of DDA and DIA acquisition. In DDA, only precursor ions above an abundance cut-off in the MS1 scan are selected for fragmentation (MS2, synonymously MS/MS). Low-abundance peptides (grey) are never fragmented and so cannot be identified. In DIA, all precursors across predefined m/z windows are fragmented together regardless of abundance, giving every peptide in every window a fragmentation spectrum at each cycle.</small>
 
 !!! danger "The unrecoverable rule"
     If an ion was never sampled and fragmented during acquisition, no downstream
@@ -243,8 +245,18 @@ PLACEHOLDER DIAGRAM COMPARING THE 2
 This has direct consequences for missing value handling. In DDA, missingness is structured: low-abundance species are disproportionately likely to fall below the selection threshold, and selection itself is stochastic across runs. Missingness in mass spectrometry data can also arise from ionisation efficiency, chromatographic retention, matrix effects, and instrument sensitivity, making it non-random in ways that are not always predictable. Replacing missing values with the sample mean — or any naive imputation — treats absence as a random event and can distort exactly the low-abundance signal a discovery study is designed to detect ([Consideration 6](module1-2-3.md#consideration-6-data-quality-and-cleaning)). Understanding why values are missing
 requires knowing how the data were acquired.
 
-!!! question "Activity: PLACEHOLDER" 
-    Labelling and acquisition activity like the sequencing read assembly one above  
+!!! question "Activity: label-free or labelled?"
+
+    For each scenario, decide whether label-free or labelled quantification is the better fit, and name the deciding factor.
+
+    1. Discovering candidate biomarkers of early-stage disease across 150 patient plasma samples.
+    2. Resolving subtle abundance changes across 6 replicate cell cultures before and after drug treatment.
+    3. Profiling 15 samples from a developmental time course with only one day of instrument time available.
+
+    ??? success "Answers: reveal after group discussion"
+        1. Label-free: 150 samples exceeds any labelling scheme's multiplexing capacity, and discovery work benefits from an unrestricted sample number.
+        2. Labelled: few samples fit easily within one set, and eliminating run-to-run variation is needed to resolve subtle, precise differences.
+        3. Labelled: multiplexing 15 samples into one set cuts the number of runs needed, fitting the limited instrument time.
 
 ---
 
