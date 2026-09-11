@@ -1,5 +1,5 @@
 
-# Module 1.2: The Experimental Workflow
+# Module 1.2: The Omics study workflow
 
 !!! info "Learning objectives"
 
