@@ -47,10 +47,10 @@ Acknowledgements (and co-authorship, where appropriate) are an important way for
 - Amarinder Singh Thind
 - Georgie Samaha
 - Mitchell O'Brien
+- Fred Jaya
 
 ## Suggested acknowledgement
 The authors acknowledge the support provided by the Sydney Informatics Hub, a Core Research Facility of the University of Sydney.  
 
 ## Cite us to support us!
-##
  

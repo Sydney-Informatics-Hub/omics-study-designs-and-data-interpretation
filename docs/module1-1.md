@@ -14,15 +14,16 @@ Every living system, whether a bacterium, a migratory bird, or a human, can be i
 
 Most biological questions can be investigated at multiple molecular layers. Each molecular layer captures a different aspect of cellular biology. A biological question may be addressed at one layer or several, depending on what is actually driving the phenotype of interest.
 
-The molecular layers follow a path described by the central dogma of molecular biology: DNA is transcribed to RNA, RNA is translated to protein, and proteins then perform many cellular functions, including catalyzing metabolic reactions. Exceptions and regulatory mechanisms complicate this picture but the framework remains a useful starting point for understanding how information flows between layers and where omics technology intervenes.
+The molecular layers can be organised around the central dogma and its downstream and regulatory connections. The central dogma describes information flow from DNA to RNA to protein. Proteins then perform many cellular functions, including catalysing metabolic reactions. Metabolites and other cellular signals can also feed back to regulate these upstream layers. Exceptions and regulatory mechanisms complicate this picture but the framework remains a useful starting point for understanding how information flows between layers and where omics technology intervenes.
 
 The figure below connects these five molecular layers through the central dogma and its regulation in the flow of biological information and what each layer captures.
 
 ![](figs/1-1_centraldogma.png){width="100%"}
 
-??? note "Layers overlap: the choice is fit, not exclusivity" Most questions can be approached from more than one layer. The lists below show what each layer is best suited to answer, not what it alone can answer.
+!!! question "Research study scenario: unexplained heart failure" 
+    A population of patients present to hospital with heart failure and the underlying cause is unclear. We will ask the same question at each molecular layer: ***what is driving these patients' heart failure?***
 
-!!! question "Research study scenario: unexplained heart failure" A population of patients present to hospital with heart failure and the underlying cause is unclear. We will ask the same question at each molecular layer: ***what is driving these patients' heart failure?***
+These examples illustrate what each molecular layer could contribute. They do not imply that every sample type would be feasible or collected in a single study.
 
 ??? note "Layers overlap: the choice is fit, not exclusivity" 
     Most questions can be approached from more than one layer. The lists below show what each layer is best suited to answer, not what it alone can answer.
@@ -44,7 +45,7 @@ The figure below connects these five molecular layers through the central dogma 
 
 DNA contains the instructions required to build and maintain cells. The genome is the complete set of DNA in an organism.
 
-Most of the genome does not encode proteins. Non-coding regions include regulatory elements like promoters, enhancers, and silencers, that control when, where, and how a gene is transcribed. Genes themselves are organised into exons (coding sequences) and introns (non-coding sequences removed during transcription). The structure of a gene determines which RNA or protein isoforms can be produced from it and therefore which downstream layers are affected.
+Most of the genome does not encode proteins. Non-coding regions include regulatory elements like promoters, enhancers, and silencers, that control when, where, and how a gene is transcribed. Many genes contain exons, which are retained in mature RNA, and introns, which are removed from pre-mRNA during RNA processing. Exons may contain protein-coding sequence or untranslated regions. The structure of a gene determines which RNA or protein isoforms can be produced from it and therefore which downstream layers are affected.
 
 Understanding the genome is a prerequisite for interpreting the epigenome (which regions are regulated) and the transcriptome (which isoforms are expressed).
 
@@ -74,14 +75,6 @@ A gene's presence tells us nothing about whether it is transcribed, how much pro
   in these individuals not all carriers develop disease and whether 
   patients without identified variants have a different underlying cause that genomics alone cannot reveal.
 
-
-    - **What we learned:** a subset of patients carry pathogenic variants 
-    in sarcomere genes, providing a potential molecular explanation for 
-    their cardiac dysfunction.
-    - **What we still don't know:** whether those variants are penetrant 
-    in these individuals not all carriers develop disease and whether 
-    patients without identified variants have a different underlying cause that genomics alone cannot reveal.
-
 ------------------------------------------------------------------------
 
 ### Layer 2: DNA modification (the epigenome)
@@ -90,9 +83,10 @@ A gene's presence tells us nothing about whether it is transcribed, how much pro
 
 #### What is it?
 
-The epigenome encompasses molecular marks and chromatin states that influence which genomic regions are accessible and how genes are regulated.
+The epigenome includes chemical modifications to DNA and histone proteins, together with changes in how accessible the DNA is. These features influence how genes are regulated without changing the DNA sequence. Two major mechanisms contribute to this: 
 
-Two major mechanisms contribute to this: DNA methylation, which typically silences gene expression when it occurs at gene promoters, and histone modifications, which can either compact or open chromatin to restrict or permit transcription.
+DNA methylation, silences gene expression when it occurs at gene promoters.
+Histone modifications, which can either compact or open chromatin to restrict or permit transcription.
 
 These modifications regulate gene activity without altering the underlying DNA sequence. The epigenome explains a fundamental puzzle in cell biology: how can a skin cell and a neuron contain identical DNA yet perform completely different functions? The answer lies in systematic epigenetic differences between cell types, which influence which genes are accessible and which are less accessible for transcription.
 
@@ -102,7 +96,11 @@ The epigenome acts as the regulatory interface between an organism's fixed genet
 
 #### Insights this layer can provide
 
-Epigenomics reveals the regulatory state of the genome in a given cell type at a given time. By mapping which regions are methylated or carry particular histone marks, we can determine which genes are accessible for transcription and which are silenced, and this information the DNA sequence alone cannot provide. This is particularly valuable for understanding how the same genome produces different cell types during development, how environmental exposures alter gene regulation over time, and how disease states involve changes in chromatin accessibility rather than changes in sequence. Epigenomic data also helps interpret non-coding variants identified by genomics: a SNP in a regulatory region only has functional relevance if that region is active in the tissue of interest, and the epigenome tells us whether it is.
+Epigenomics reveals the regulatory state of the genome in a given cell type at a given time. By measuring DNA methylation, histone modifications and chromatin accessibility, we can identify regulatory regions associated with greater or lower potential for gene expression information that DNA sequence alone cannot provide.
+
+This is particularly valuable for understanding how the same genome produces different cell types during development, how environmental exposures alter gene regulation over time, and how disease states involve changes in chromatin accessibility rather than changes in sequence. Epigenomic data also helps interpret non-coding variants identified by genomics: 
+  
+Epigenomic data can show whether a regulatory region containing a SNP is accessible or carries regulatory marks in the tissue of interest. This helps assess whether the SNP could affect gene regulation, although it does not prove that the SNP is functional.
 
 #### What it can't tell us
 
@@ -123,11 +121,11 @@ Epigenetic changes indicate regulatory potential, not gene expression. An access
 
 #### What is it?
 
-The transcriptome is the complete set of RNA molecules a cell or tissue is producing at a given moment. Where the genome tells us which genes exist and the epigenome provides information about their regulatory state, the transcriptome tells us which RNA molecules are present and their abundance.
+The transcriptome is the set of RNA molecules present in a cell or tissue at a given time. Their abundance reflects both RNA production and RNA stability. Where the genome tells us which genes exist and the epigenome provides information about their regulatory state, the transcriptome tells us which RNA molecules are present and their abundance.
 
 It provides one of the first molecular readouts of the cell's current state rather than its genetic potential.
 
-The transcriptome captures more than which genes are active. Alternative splicing, which is the process by which different combinations of exons are joined during RNA processing, means a single gene can produce multiple distinct transcripts, called ***isoforms***. Each isoform potentially encodes a protein with a different structure or function. Two samples with identical gene level expression can therefore differ substantially at the isoform level, with functional consequences that gene level analysis would miss.
+The transcriptome captures more than which transcripts are present and at what abundance. Alternative splicing, which is the process by which different combinations of exons are joined during RNA processing, means a single gene can produce multiple distinct transcripts, called ***isoforms***. Each isoform potentially encodes a protein with a different structure or function. Two samples with identical gene level expression can therefore differ substantially at the isoform level, with functional consequences that gene level analysis would miss.
 
 Beyond messenger RNA (mRNA), the transcriptome includes non-coding RNAs like microRNAs and long non-coding RNAs, that do not encode proteins but regulate gene expression, chromatin state, and RNA stability. Structural RNAs such as ribosomal and transfer RNAs are also transcribed constituents of the transcriptome, though they are typically removed in standard transcriptome studies. The regulatory non-coding RNA fraction is large, incompletely characterised, and increasingly recognised as central to the control of gene expression.
 
@@ -157,13 +155,9 @@ RNA abundance does not reliably predict protein abundance. Post-transcriptional 
 
 ### Layer 4: Proteins (the proteome)
 
-![](figs/1-1_protein.png){width="100%"}
-
 #### What is it?
 
-Proteins are the major functional molecules of the cell.
-
-They catalyse the biochemical reactions that sustain life, form the structural scaffolds of cells and tissues, transmit signals, transport molecules, and regulate gene expression. The proteome is the complete set of proteins present in a cell, tissue, or organism at a given time.
+Proteins are the major functional molecules of the cell. They catalyse the biochemical reactions that sustain life, form the structural scaffolds of cells and tissues, transmit signals, transport molecules, and regulate gene expression. The proteome is the complete set of proteins present in a cell, tissue, or organism at a given time.
 
 Proteins rarely act in isolation. Many assemble into multi-protein complexes that are molecular machines whose activity depends on which subunits are present and in what relative proportions. The composition of these complexes can determine substrate specificity, regulatory sensitivity, and subcellular localisation in ways that measuring individual protein abundance cannot capture. A protein can be present at normal levels while its binding partners are absent, leaving the complex non-functional.
 
@@ -174,8 +168,7 @@ The relationship between a protein's amino acid sequence and its three-dimension
 Proteins execute virtually every cellular function. Unlike RNA, which reflects transcriptional activity, the proteome provides a closer view of the molecules involved in cellular functions: which enzymes are present, which signalling proteins are altered, and which structural components are affected. The proteome integrates the effects of post-translational modification by phosphorylation, ubiquitination, acetylation, and others, that rapidly alter protein activity, localisation, and stability in response to cellular signals without any change in transcript levels. This regulatory layer is invisible to transcriptomics and only partially visible to genomics, making the proteome essential for understanding how cells respond dynamically to their environment.
 
 #### Insights this layer can provide
-
-Proteomics directly measures the molecules that carry out cellular functions. It can quantify which proteins are present and in what abundance, identify changes in post-translational modification state that alter protein activity or interactions, and detect mislocalisation of proteins to the wrong cellular compartment. In clinical contexts, proteins measurable in accessible biofluids such as plasma or urine serve as biomarkers of tissue-level pathology, reflecting changes in distant tissues that cannot be directly sampled.
+Proteomics can identify which proteins are present and estimate their abundance. Specialised approaches can also measure post-translational modifications, protein interactions and subcellular localisation. In clinical contexts, proteins measurable in accessible biofluids such as plasma or urine serve as biomarkers of tissue-level pathology, reflecting changes in distant tissues that cannot be directly sampled.
 
 Proteomics also reveals discordance with the transcriptome. A transcript can be upregulated while its protein product is rapidly degraded, or a protein can accumulate without a corresponding increase in its mRNA due to changes in translation efficiency or protein stability. These mismatches are biologically meaningful and would be missed by transcriptomics alone. For questions about what the cell is actually doing, the proteome provides evidence that no upstream layer can substitute for.
 
@@ -184,16 +177,14 @@ Proteomics also reveals discordance with the transcriptome. A transcript can be 
 Protein abundance alone does not capture activity. A protein can be present in abundance while sequestered in the wrong compartment, held in an inactive conformation by an inhibitor, or absent from its functional complex. Post-translational modifications modulate activity in ways that standard abundance measurements may not detect without modification-specific enrichment strategies. The proteome also does not directly reveal the downstream metabolic consequences of protein activity — for that, the metabolome is needed.
 
 ??? note "The proteome in our research question"
-    Measuring the proteome of cardiac tissue or plasma brings us to the level of functional molecules. Clinically actionable signals emerge here that are invisible to transcriptomics: elevated BNP and troponin in plasma reflect cardiac stress and injury at the protein level; mislocalisation of sarcomeric proteins disrupts the mechanical function of the contractile apparatus; and abnormal phosphorylation of contractile proteins alters their calcium sensitivity and force generation. Proteomics can also expose mismatches with the transcriptomic picture, a transcript upregulated in the failing heart whose protein product is simultaneously being degraded, or a structural protein present at normal abundance but carrying modifications that impair its function.
+    Measuring the proteome of cardiac tissue or plasma brings us close to the functional molecules involed in disease. Clinically informative biomarkers can be detected in plasma: e.g. elevated BNP and troponin in plasma can reflect cardiac stress and injury. Specialised phosphoproteomic or spatial approaches could investigate abnormal phosphorylation or localisation of contractile proteins. Proteomics can also expose mismatches with the transcriptomic picture, a transcript upregulated in the failing heart whose protein product is simultaneously being degraded, or a structural protein present at normal abundance but carrying modifications that impair its function.
 
-    - **What we learned:** BNP and troponin are elevated in plasma; sarcomere proteins are mislocalised; phosphorylation patterns on contractile proteins are abnormal, with functional implications for myocardial force generation.
-    - **What we still don't know:** what those protein-level changes mean for the heart's real-time metabolic and energetic state, the question the next layer is positioned to answer.
+   - **What we learned**: BNP and troponin are elevated in plasma, and the abundance of several cardiac and inflammatory proteins differs from the comparison group. Specialised analyses also identify altered phosphorylation of contractile proteins.
+    - **What we still don't know:** what those protein level changes mean for the heart's real-time metabolic and energetic state, the question the next layer is positioned to answer.
 
 ------------------------------------------------------------------------
 
 ### Layer 5: Metabolites (the metabolome)
-
-![](figs/1-1_metabolite.png){width="100%"}
 
 #### What is it?
 
@@ -201,7 +192,7 @@ Metabolites are small molecules produced, consumed, or modified during cellular 
 
 They include sugars, amino acids, lipids, nucleotides, and organic acids - the substrates and products of the enzymatic reactions that sustain cellular life. The metabolome is the complete set of these molecules present in a cell, tissue, or organism at a given time.
 
-Metabolites occupy a distinctive position in the molecular hierarchy. Where upstream layers describe what the cell has the potential to do (genome), what is being regulated (epigenome), what is being expressed (transcriptome), and what machinery is present (proteome), the metabolome captures what is actually happening biochemically at the moment of measurement. It is the closest molecular readout of physiological state.
+Metabolites occupy a distinctive position in the molecular hierarchy. Where upstream layers describe genetic potential, regulatory state, RNA abundance and cellular machinery present, the metabolome provide a close readout of biochemical and physiological state at the moment of measurement. However, metabolite concentrations alone do not establish pathway activity or metabolic flux.
 
 Beyond their role as metabolic intermediates, many metabolites function as signalling molecules, linking metabolic state back to gene regulation and completing a regulatory loop that runs in both directions through the molecular hierarchy.
 
@@ -249,63 +240,45 @@ These layers are interconnected and feed back on each other. The table sets out 
 
 ## Activity
 
-Each of the five molecular layers described above is studied by its own scientific field. Collectively, these fields are called **omics**: genomics, epigenomics, transcriptomics, proteomics, metabolomics. The suffix denotes the comprehensive study of an entire class of molecules.
+Each of the five molecular layers described above is studied by its own omics field: genomics, epigenomics, transcriptomics, proteomics and metabolomics. Omics approaches measure many features from a molecular layer simultaneously, providing a broad, system-level view. However, every platform captures only part of that layer, and omics studies may use either broad discovery-based or more focused targeted approaches.
 
-The ambition is a global view of a biological layer, rather than the targeted measurement of selected molecules that characterised earlier approaches.
+!!! question "Walk the layers"
 
-!!! question "Walk the layers"    
-    Pick the broad question closest to your field, or reinterpret the example using an organism or system you work with. These examples represent high-level biological questions rather than specific studies, and the same design principles apply across systems.
-        
-        Walk through the molecular layers and decide how you would approach the question.
-        
-        In your group, discuss:
-        
-            1. **Which molecular layer would you start with, and why?**
-            2. **What would this layer tell you, and what would it miss?**
-            3. **What comparisons or timing would be needed to 
-            make this study meaningful?**
-        
-            <!-- 4. **Budget check:** you can measure only one molecular layer 
-            initially. What evidence would convince you to add a second? -->
-        
-        <!-- 4. **Budget check:** you can measure only one molecular layer 
-           initially. What evidence would convince you to add a second? -->
-        
-        **Report back:** your chosen layer, what another layer might 
-        have revealed, and one assumption behind your choice.
-        
-        ??? example "Clinical / human disease"
-        
-            **What drives progression from a treatable tumour to one that 
-            resists therapy?**
-        
-            Consider: where would you sample from, when in the disease 
-            course, and what would each molecular layer contribute to 
-            understanding progression?
-        
-        ??? example "Wildlife / infectious disease"
-        
-            **Why do some populations tolerate an infectious disease while 
-            others suffer severe disease from the same pathogen?**
-        
-            Consider: is this a host question (immune response, genetic 
-            resistance), a pathogen question (strain, virulence factors), 
-            or both? Use any host–pathogen system relevant to your field.
-        
-        ??? example "Aquaculture / production biology"
-        
-            **Why do some farmed fish grow faster than others despite 
-            receiving the same diet?**
-        
-            Consider: if diet is held constant, what could explain the 
-            variation? Genetics, developmental history, physiology, gut 
-            microbes? Which layer would you measure first, and how would 
-            you sample to make the comparison meaningful?
-        
-        ??? example "Plant / environmental stress"
-        
-            **How does a crop plant respond to acute environmental stress, 
-            and what makes some varieties more tolerant than others?**
+    Pick the broad question closest to your field, or reinterpret an example using an organism or system you work with. These examples represent high-level biological questions rather than specific studies, and the same design principles apply across systems.
+
+    Walk through the molecular layers and decide how you would approach the question.
+
+    In your group, discuss:
+
+    1. **Which molecular layer would you start with, and why?**
+    2. **What would this layer tell you, and what would it miss?**
+    3. **What comparisons or timing would be needed to make the study meaningful?**
+
+    **Report back:** Your chosen layer, what another layer might have revealed, and one assumption behind your choice.
+
+    ??? example "Clinical / human disease"
+
+        **What drives progression from a treatable tumour to one that resists therapy?**
+
+        Consider where you would sample, when in the disease course, and what each molecular layer would contribute to understanding progression.
+
+    ??? example "Wildlife / infectious disease"
+
+        **Why do some populations tolerate an infectious disease while others experience severe disease from the same pathogen?**
+
+        Consider whether this is a host question, such as immune response or genetic resistance; a pathogen question, such as strain or virulence factors; or both. You can use any host–pathogen system relevant to your field.
+
+    ??? example "Aquaculture / production biology"
+
+        **Why do some farmed fish grow faster than others despite receiving the same diet?**
+
+        Consider what might explain the variation if diet is held constant—for example, genetics, developmental history, physiology or gut microbes. Which layer would you measure first, and how would you sample to make the comparison meaningful?
+
+    ??? example "Plant / environmental stress"
+
+        **How does a crop plant respond to acute environmental stress, and what makes some varieties more tolerant than others?**
+
+        Consider whether you want to investigate the immediate stress response, the mechanisms associated with tolerance, or inherited differences between varieties. Which molecular layer and sampling times would best address your question?
 
 <!--
 
@@ -332,7 +305,7 @@ Common defensible starting points
 
 Genome
 
-Appropriate when resistance may be driven by acquired mutations, such as resistance to targeted therapies (e.g. Trastuzumab blocks HER2 signalling). Useful for identifying genetic changes that may directly alter treatment response.
+Appropriate when resistance may be driven by acquired genomic alterations that change the drug target or activate an alternative signalling pathway. Useful for identifying genetic changes that may directly alter treatment response.
 
 Transcriptome
 
