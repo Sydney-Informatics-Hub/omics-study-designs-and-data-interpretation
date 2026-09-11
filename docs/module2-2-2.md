@@ -6,28 +6,28 @@
     - Identify how multi-omics designs compound budget constraints
     - Apply a decision sequence for allocating a finite budget across depth, replication, and platform scope
 
-Section 2.2.1 established that statistical power requires a sufficient number of independent biological samples. This section addresses a second resource that competes for the same budget: how extensively each sample is measured.
+[Module 2.2.1](module2-1-2.md) established that statistical power requires a sufficient number of independent biological samples. This section addresses a second resource that competes for the same budget: how extensively each sample is measured.
 
-Every omics platform subsamples the molecules present in a biological specimen. A sequencing library does not sequence every DNA or RNA molecule in a cell — it sequences a random subset. A mass spectrometry acquisition does not detect every protein or metabolite — it detects those that enter the instrument during the acquisition window and produce sufficient signal to be identified. Increasing the extent of that subsampling costs money, and that money comes from the same budget that pays for biological samples.
+Every omics platform samples only a subset of the molecules in a biological specimen. A sequencing library does not read every DNA or RNA molecule in a cell; it reads a random sample of them. A mass spectrometry run does not detect every protein or metabolite in a sample; it captures only the molecules that enter the instrument during the acquisition window and produce a strong enough signal to be detected. Increasing this sampling depth costs money, and that money comes from the same budget used for biological samples.
 
-Both decisions — how many samples to collect, and how extensively each is measured — determine what a study can detect. They compete: spending more per sample means fewer samples; collecting more samples means less available per sample. A third decision, whether to measure one molecular layer or several, multiplies the cost of both.
+Two design choices therefore compete for the same budget: how many biological samples to collect and how deeply each sample is measured. Spending more on each sample means fewer total samples. Collecting more samples means less budget available per sample. A third choice — whether to measure one molecular layer or several — increases the total cost again.
 
-All three decisions must be made before data collection begins. None can be revised after samples have been processed.
+These decisions must be made before data collection begins. They cannot be changed easily after samples have been processed.
 
-??? tip "Consideration 2: Platform selection"
+??? tip "[Consideration 2](module1-2-1.md#consideration-2-platform-selection): Platform selection"
     Platform choice determines per-sample cost, throughput capacity, and what can be measured at all. The same question addressed by targeted versus whole-genome sequencing, or DDA versus DIA proteomics, carries a different per-sample price and a different depth requirement. Platform selection and budget planning are not separable decisions.
 
-??? tip "Consideration 4: Batch effects"
+??? tip "[Consideration 4](module1-2-2.md#consideration-4-batch-effects): Batch effects"
     How samples are distributed across acquisition runs affects both per-sample cost and batch structure. Grouping samples to fill runs efficiently can reduce cost but risks confounding batch with biology if all samples from one condition end up in the same run. Both pressures must be planned for together before any sample is processed.
 
-??? tip "Consideration 5: Experimental controls"
+??? tip "[Consideration 5](module1-2-2.md#consideration-5-experimental-controls): Experimental controls"
     Controls — extraction blanks, pooled QC samples, spike-ins, shared reference samples — consume instrument time and sample slots. They must be counted and costed before the biological sample number is set. A study that sets its biological sample number first and adds controls afterwards either has fewer biological replicates than planned or an unplanned cost overrun.
 
 ---
 
 ## What depth means on each platform
 
-Module 1.1 described the five molecular layers and what each measures. The platforms used to measure those layers have different architectures, and the word "depth" describes something specific to each.
+[Module 1.1](module1-1.md) described the five molecular layers and what each measures. The platforms used to measure those layers have different architectures, and the word "depth" describes something specific to each.
 
 | Layer | Platform | What depth means in practice |
 |---|---|---|
@@ -63,9 +63,9 @@ Where the detection floor sits for a given study depends on the features the que
 
 Measurement depth and biological replication solve different problems. Conflating them leads to over-investment in one dimension and deficiency in the other.
 
-**Biological replication** (Section 2.2.1) addresses the question: given that a feature is being detected, does the difference I observe between groups reflect biology or chance variation between individuals? Each additional independent biological sample — a separate patient, animal, or environmental specimen — provides a new observation of the biological effect. Statistical power for detecting a true difference increases with biological sample number as long as the study is underpowered for the comparison of interest.
+**Biological replication** ([module 2.2.1](module2-1-2.md)) addresses the question: given that a feature is being detected, does the difference I observe between groups reflect biology or chance variation between individuals? Each additional independent biological sample (— )a separate patient, animal, or environmental specimen) provides a new observation of the biological effect. Statistical power for detecting a true difference increases with biological sample number as long as the study is underpowered for the comparison of interest.
 
-**Measurement depth** addresses a prior question: is this feature being detected at all? A feature that is not consistently sampled across samples cannot be analysed reliably. Differential analysis — differential expression, differential methylation, differential protein abundance, differential metabolite concentration — assumes the feature is present in the dataset. If it is absent from some samples because depth was insufficient, those missing values introduce noise that statistical analysis cannot recover.
+**Measurement depth** addresses a prior question: is this feature being detected at all? A feature that is not consistently sampled across samples cannot be analysed reliably. Differential analysis (differential expression, differential methylation, differential protein abundance, differential metabolite concentration) assumes the feature is present in the dataset. If it is absent from some samples because depth was insufficient, those missing values introduce noise that is hard to interpret accurately.
 
 These two problems require different solutions:
 
@@ -96,21 +96,21 @@ In DIA proteomics, extending the gradient from 60 to 90 minutes typically increa
 The practical consequence: identify the minimum depth needed to detect the features the question depends on. Set depth there. Budget freed by not over-investing in depth above the detection floor is more productively directed at biological sample number, which continues to improve power as long as the study is underpowered.
 
 !!! note "Depth as a confounding variable"
-    If comparison groups are measured at systematically different depths — one condition sequenced more shallowly, or one batch run with a shorter gradient — those differences appear in the data as differences in the number of features detected per sample. This can produce apparent biological differences that reflect measurement conditions rather than biology. Depth must be matched across all comparison groups. This is a special case of batch effect confounding (Consideration 4, Section 2.1.2).
+    If comparison groups are measured at systematically different depths — one condition sequenced more shallowly, or one batch run with a shorter gradient — those differences appear in the data as differences in the number of features detected per sample. This can produce apparent biological differences that reflect measurement conditions rather than biology. Depth must be matched across all comparison groups. This is a special case of batch effect confounding ([Consideration 4](module1-2-2.md#consideration-4-batch-effects), [Module 2.1.2](module2-1-2.md)).
 
 ---
 
 ## When the measurement approach must change
 
-For most studies, the question is whether a detectable difference between groups is real. More biological samples address this. There are cases where the problem is not statistical confidence over a detectable feature but whether a specific feature can be observed at all. In these cases, more biological samples do not help. The measurement must change.
+For most studies, the main issue is whether a real difference between groups can be detected with enough confidence. In that case, increasing the number of biological samples is the right solution. However, some studies face a different problem: the feature of interest is so rare or so weakly detected that it is not measurable with the current method at all. In those cases, adding more samples does not solve the problem; the measurement method itself must be improved.
 
-**Low-frequency somatic variants (genome).** A mutation present in only a fraction of tumour cells — for example, a resistance mutation in an emerging subclone — is sequenced proportionally less often at any given coverage. At 30× average coverage, a variant in 5% of cells is expected to appear in approximately 1–2 reads, which cannot be reliably distinguished from sequencing artefacts. Increasing coverage to 200–1000× at the positions of interest increases the expected read count for the rare allele to levels where confident calling becomes feasible. Recruiting more patients does not increase coverage within any individual tumour.
+**Low-frequency somatic variants (genome).** A mutation present in only a fraction of tumour cells (for example, a resistance mutation in an emerging subclone) is sequenced proportionally less often at any given coverage. At 30× average coverage, a variant in 5% of cells is expected to appear in approximately 1–2 reads, which cannot be reliably distinguished from sequencing artefacts. Increasing coverage to 200–1000× at the positions of interest increases the expected read count for the rare allele to levels where confident calling becomes feasible. Recruiting more patients does not increase coverage within any individual tumour.
 
-**Low-abundance transcripts (transcriptome).** A gene expressed at very low levels in the tissue may not appear in any reads at standard sequencing depth. If the question depends on this transcript — a regulatory long non-coding RNA, or a transcript from a rare cell population — increasing sequencing depth per sample is the correct response. More donors all sequenced at the same shallow depth will each individually miss the transcript.
+**Low-abundance transcripts (transcriptome).** A gene expressed at very low levels in the tissue may not appear in any reads at standard sequencing depth. If the question depends on this transcript (a regulatory long non-coding RNA, or a transcript from a rare cell population) increasing sequencing depth per sample is the correct response. More donors all sequenced at the same shallow depth will each individually miss the transcript.
 
 **Poorly detected proteins (proteome).** A signalling protein at low abundance, or one that co-elutes during separation with far more abundant proteins, may not be sampled during a standard DDA acquisition. The solutions are at the measurement level: switching to DIA (which covers the full mass range rather than selecting only the most abundant detected ions); extending the gradient to separate co-eluting peptides; adding an offline fractionation step; or depleting highly abundant background proteins to shift instrument capacity toward lower-abundance species. More biological samples measured with the same acquisition settings will each individually miss the protein.
 
-**Trace metabolites (metabolome).** A metabolite near the instrument's detection limit requires signal accumulation conditions sufficient to separate it from background noise. Targeted acquisition — with pre-specified parameters tuned for each metabolite of interest — achieves this. Untargeted acquisition is not optimised for any individual metabolite, and metabolites near the detection limit are inconsistently detected across samples. More samples in an untargeted run do not raise any individual metabolite above its detection floor; targeted acquisition of that metabolite does.
+**Trace metabolites (metabolome).** A metabolite near the instrument's detection limit requires signal accumulation conditions sufficient to separate it from background noise. Targeted acquisition (with pre-specified parameters tuned for each metabolite of interest) achieves this. Untargeted acquisition is not optimised for any individual metabolite, and metabolites near the detection limit are inconsistently detected across samples. More samples in an untargeted run do not raise any individual metabolite above its detection floor; targeted acquisition of that metabolite does.
 
 ---
 
@@ -134,7 +134,7 @@ Given the principles above, a finite budget is allocated in this order:
 
 ## One budget across multiple molecular layers
 
-Multi-omics studies measure the same biological samples across more than one molecular layer. As Module 1.1 described, each layer reveals a different aspect of cellular biology, and no single layer gives the complete picture. However, measuring multiple layers simultaneously compounds the budget constraint in two ways.
+Multi-omics studies measure the same biological samples across more than one molecular layer. As [Module 1.1](module1-1.md) described, each layer reveals a different aspect of cellular biology, and no single layer gives the complete picture. However, measuring multiple layers simultaneously compounds the budget constraint in two ways.
 
 **Cost compounds.** Each molecular layer carries its own per-sample cost. A study measuring transcriptomics and proteomics on the same samples pays the per-sample cost of both platforms for every sample.
 
