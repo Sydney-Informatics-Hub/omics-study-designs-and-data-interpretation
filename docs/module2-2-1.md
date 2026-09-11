@@ -8,30 +8,30 @@
 
 Sections 2.1.1 through 2.1.3 addressed whether a measurement can be trusted: whether the platform is appropriate, whether samples are allocated to avoid confounding, and whether measurements are consistent and documented. **This section addresses whether there are enough independent observations to detect the effect of interest**. A study can satisfy every criterion in Module 2.1 and still fail to replicate if the sample size was insufficient.
 
-??? tip "Consideration 3: Statistical power"
+??? tip "[Consideration 3](module1-2-1.md#consideration-3-statistical-power): Statistical power"
     A study is powered when the sample size is sufficient to detect the effect of interest with a specified probability. In omics, power is routinely not estimated before sample collection. The number of samples needed is often determined by budget, availability, or convention instead. An underpowered study may produce findings with elevated false positive rates and poor reproducibility. 
 
-??? tip "Consideration 10: The unit of replication"
-    Only biological replicates — independent samples from the population — contribute to *n*. Technical replicates, subsamples, and pooled material do not. The unit has to be identified before a sample size can be calculated, because the calculation is counting independent observations of that unit. A study that misidentifies the unit will produce an *n* that describes a different study.
-
-??? tip "Consideration 11: The multiple-testing burden"
+??? tip "[Consideration 3](module1-2-1.md#consideration-3-statistical-power): The multiple-testing burden"
     Classical power calculations assume a single hypothesis. In omics studies, thousands to millions of features are tested simultaneously, and false discovery rate correction lowers the effective significance threshold for each one. A study powered for one well-characterised feature is not powered for the dataset. The multiple-testing burden is not a statistical technicality to manage at analysis — it is part of the sample size problem and has to be accounted for at design.
 
-??? tip "Consideration 12: Effect size and variability must be estimated"
+??? tip "[Consideration 3](module1-2-1.md#consideration-3-statistical-power): Effect size and variability must be estimated"
     Sample size calculations require an effect size and a variance estimate. Neither has a default value, and neither can be derived from the power calculation itself. They must come from domain knowledge, comparable published studies, or pilot data. Using assumed or generic values produces a sample size estimate that describes a study different from the one being designed. This is the step most often skipped, and it is why sample sizes set by budget or convention so often fall short.
+
+??? tip "[Consideration 8](module1-2-4.md#consideration-8-computational-and-analytical-controls): The unit of replication"
+    Only biological replicates — independent samples from the population — contribute to *n*. Technical replicates, subsamples, and pooled material do not. The unit has to be identified before a sample size can be calculated, because the calculation is counting independent observations of that unit. A study that misidentifies the unit will produce an *n* that describes a different study.
 
 ---
 
 ## The unit of replication
 
-A study's sample size is a count of independent biological units. It is the number of patients, animals, cultures, or environmental samples that contribute separate, non-overlapping observations to the analysis. Before that count means anything, the unit has to be identified.
+A study's sample size is not simply the number of files, wells, cells, or measurements produced. It is the number of independent biological units being compared, such as patients, animals, cultures, or environmental samples. Before running our models it is important to recognise what counts as one independent unit.
 
-Two failure modes collapse the effective count without changing the apparent one.
+Two common design choices can make the apparent sample number differ from the real number of independent units.
 
 1. **Subsampling** takes many measurements from one biological unit: thousands of cells from one donor, multiple vials from one water body.
 2. **Pooling** merges material from several biological units before measurement, so the pool represents an average rather than any individual.
 
-When subsamples are treated as independent biological replicates (i.e. analysed as though each vial, cell, or well is a separate observation of the population) the apparent *n* is inflated. This is called **pseudoreplication**: the statistical analysis assumes more independent observations than actually exist, producing inflated degrees of freedom and overconfident p-values. 
+When subsamples are treated as independent biological replicates, the apparent *n* is inflated. This is like asking one person the same survey question five times and claiming you surveyed five people, you have more measurements, but not more independent information about the population. This is called pseudoreplication. The result of this is that the statistical analysis assumes more independent observations than actually exist, producing inflated degrees of freedom and overconfident p-values. 
 
 The activity below uses a concrete sampling scenario to distinguish valid biological replication from pseudoreplication, and to apply that distinction to the power and sample size questions that follow.
 
@@ -60,9 +60,11 @@ The activity below uses a concrete sampling scenario to distinguish valid biolog
 
 ## Statistical power in omics
 
-Sample size in omics is rarely determined by a power calculation. It is determined by budget, sample availability, or instrument capacity, and is often fixed before anyone has asked what it takes to detect the effect of interest. The result is a study that is well-executed at the bench but underpowered for its bioinformatic analyses. Underpowering does not appear during analysis — it appears when findings fail to replicate in an independent cohort or on a second platform.
+Sample size in omics is rarely determined by a power calculation. It is determined by budget, sample availability, or instrument capacity, and is often fixed before anyone has asked what it takes to detect the effect of interest. The result is a study that is well-executed at the bench but underpowered for its bioinformatic analyses. A small sample size is not always obvious from the initial results. In fact, a study may still produce statistically significant findings, but those findings are more likely to be unstable, inflated in effect size, and difficult to replicate or validate.
 
-Classical power calculations do not transfer directly to omics. Standard formulas assume a single hypothesis, an approximately known variance, and a 0.05 significance threshold. In omics, thousands to millions of features are tested at once, variance differs from feature to feature and is not known in advance, and false discovery rate correction lowers the effective significance threshold for every feature in proportion to the number tested. A study powered to detect a single well-characterised effect is not powered for the full dataset. The practical consequence is that analyses may recover a reasonable number of signals before correction and far fewer after it.
+Classical power calculations do not transfer directly to omics because the shape of the data is often reversed from the settings these formulas were built for. Many statistical workflows assume a relatively large number of observations and a smaller number of variables. Omics studies often have the opposite structure: relatively few samples, because data generation is expensive or the trait is rare, and a very large number of measured features, such as genes, proteins, metabolites, or genomic regions.
+
+This matters because testing many features increases the chance of false positives. Omics analyses therefore use false discovery rate correction, which makes the effective significance threshold more stringent for each feature. At the same time, different features vary by different amounts, and that variability is usually not known before the data are generated. A study powered to detect one well-characterised effect is therefore not necessarily powered for the full dataset. In practice, an analysis may return many possible signals before correction and far fewer after correction.
 
 ??? note "Multiple testing and false discovery rate correction"
     When a single hypothesis is tested at a 0.05 threshold, there is a 5% chance of a false positive. When 20,000 gene expression features are each tested at the same threshold, roughly 1,000 false positives are expected by chance alone, even if no true differences exist. Multiple testing correction addresses this by adjusting the significance threshold based on the number of tests performed.

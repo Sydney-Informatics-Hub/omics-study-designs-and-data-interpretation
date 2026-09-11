@@ -5,23 +5,31 @@
     - Explain why no downstream correction can recover confounded variables 
     - Compare why blocking corrects for batching in named factors, and randomisation for unnamed ones
 
-## One failure, many faces
+## Sources of confounding and batch effects
 
-Consideration 1 and Consideration 4 in Module 1 were presented separately because they arise at different points in a study: sampling bias enters during cohort assembly, batch effects during processing. Structurally they are the same failure - an unmeasured variable ends up aligned with the groups being compared. The platform may be appropriate and the measurement technically sound; the problem is that the observed difference cannot be attributed to the biology alone.
+[Consideration 1](module1-2-1.md#consideration-1-cohort-design-and-confounding) and [Consideration 4](module1-2-2#consideration-4-batch-effects) in Module 1 were presented separately because they arise at different points in a study: sampling bias enters during cohort assembly, batch effects during processing. Structurally they are the same failure - an unmeasured variable ends up aligned with the groups being compared. The platform may be appropriate and the measurement technically sound; the problem is that the observed difference cannot be attributed to the biology alone.
 
 When two variables are perfectly aligned in a dataset, they are *confounded*. No comparison within that dataset can attribute a difference to one rather than the other, because there is no case where they vary independently.
 
-??? tip "Consideration 1:Cohort design and confounding"
+Not every variable associated with an omics measurement is a confounder. A covariate is any measured variable that may need to be described, balanced, or included in the analysis, such as age, sex, site, or processing batch. A covariate becomes a confounder when it is associated with both the omics measurement and the outcome being compared, and is not part of the biological pathway between them. A mediator is different: it lies on the causal pathway from the omics measurement to the outcome. Adjusting for a mediator can remove part of the biological effect the study is trying to measure.
+
+Identifying which role a variable plays matters for both accuracy and interpretability. An unrecognised confounder can create a false positive, hide a real effect, or make an effect size appear larger or smaller than it really is, so the numerical result is inaccurate. Treating a mediator as a confounder creates a different problem where the analysis may adjust away part of the biological mechanism under study, making the result harder to interpret. The goal is not to include every available variable in a model, but to decide which variables need to be balanced, recorded, adjusted for, or left out because of their relationship to youre trait or interest and overall study question.
+
+At the design stage, these relationships cannot be tested definitively because the omics data have not yet been generated. The decision can instead be informed by prior biological knowledge, evidence from earlier studies, and advice from domain experts. The decision tree below can help understand your variables. It asks whether a variable is associated with the omics measurement, whether it is also associated with the outcome, and whether it sits on the causal pathway between them to help identify its classification.
+
+![](figs/2-1_confounder_decisiontree.png){width=90%}
+
+??? tip "[Consideration 1](module1-2-1.md#consideration-1-cohort-design-and-confounding):Cohort design and confounding"
     Molecular profiles are sensitive to many biological and technical variables simultaneously. Age, sex, disease state, medication use, tissue composition, and sample handling conditions can all alter measured signal across every omics layer. A study that does not account for these variables risks attributing their effects to the biological question of interest.
 
     A confounder that was neither controlled nor recorded cannot be modelled during analysis. If a variable may influence the outcome, measure it at the time of collection.
 
-??? tip "Consideration 4: Batch effects"
+??? tip "[Consideration 4](module1-2-2#consideration-4-batch-effects): Batch effects"
     A batch effect is a systematic technical bias introduced when samples are processed under different conditions — different sequencing runs, reagent lots, operators, instruments, or processing dates. Unlike random noise, batch effects produce consistent, reproducible patterns in the data that can resemble biological variation or mask it entirely.
 
     When batch and biological group are perfectly aligned, there is no way to determine which differences are technical and which are real. This design is unrecoverable. When cases and controls are distributed across batches, the batch effect is estimable independently of the biological comparison and can be corrected statistically.
 
-The figure below is reproduced from Consideration 4 in Module 1. Batch is the most common version of this problem, and the easiest to draw.
+The figure below is reproduced from [Consideration 4](module1-2-2#consideration-4-batch-effects) in Module 1. Batch is the most common version of this problem, and the easiest to draw.
 
 ![Confounded vs distributed design: the biological groups either travel with the factor or across it](figs_m1/01_batch_Effect_v02.png){width=90%}
 
@@ -41,15 +49,15 @@ In the confounded design, cases and controls were processed in separate batches.
     Identify the something.  
 
 ---
-## Tools for prevention
+## Design approaches to mitigate confounding and batch effects
 
-Multiple strategies exist for preventing a variable from aligning with experimental groups: matching, stratification, and balanced sampling. All are variations on two underlying approaches, and the distinction between them comes down to one question: can the factor be named in advance?
+Several design strategies can prevent study groups from becoming confounded with other sources of variation, including matching, stratification, balanced sampling, blocking, and batch allocation. These strategies fall into two broad approaches that either aim to control a factor that is known before the study begins, or distributing samples across a factor that cannot be fully controlled. 
 
-- **Blocking** addresses variation that can be named and recorded — batch, site, sex, plate. Balance is built in deliberately by ensuring every biological group appears at every level of the factor.
+- **Blocking** manages known sources of variation that can be planned for, measured, and included in the allocation, such as processing batch, collection site, sex, or plate. Samples from each group are deliberately allocated across the levels of each factor, so the factor does not become confounded with the comparison of interest.
 
-- **Randomisation** addresses variation that cannot be named. Reagent drift, unmeasured gradients in processing equipment, unrecorded differences in operator technique. Unknown factors cannot be balanced directly, so samples are instead distributed to prevent any single factor from aligning with the biological comparison.
+- **Randomisation** protects against sources of variation that cannot be identified or balanced in advance, such as reagent drift, subtle equipment gradients, or differences in operator technique. Samples are assigned and processed in mixed order so that these unknown factors are unlikely to align systematically with the biological groups.
 
-Both are required, and neither can be applied retrospectively. Both are allocation decisions made before any sample is processed.
+Neither approach can be applied retrospectively.
 
 The figure below shows all three possibilities for the same 20 samples (10 cases and 10 controls) distributed across two processing batches.
 
@@ -60,23 +68,23 @@ The figure below shows all three possibilities for the same 20 samples (10 cases
 - **Blocked**: Each batch holds 5 cases and 5 controls. The batch effect is estimable from within-batch contrasts and can be adjusted for at analysis.
 - **Randomised**: Samples are assigned by chance. Balance is approximate rather than guaranteed — at ten samples per group split across two batches, only around a third of random allocations come out exactly balanced, and roughly one in five lands at 7:3 or worse.
 
-For any factor that can be named, **blocking** guarantees the balance that **randomisation** only makes likely. Randomisation remains necessary for everything that cannot be named in advance. A blocked design costs nothing beyond planning the allocation before processing begins.
+For factors that can be identified in advance, **blocking** balances biological groups across their levels. **Randomisation** may achieve a similar balance by chance, but does not ensure it, particularly in small studies. Randomisation however is necessary for sources of variation that cannot be anticipated.
 
-In most omics studies the biological grouping is fixed: patients are not randomised to disease status, populations are not randomised to environmental exposure, and fields are not randomised to their soil type. When the exposure cannot be randomised, the available strategies degrade in a predictable order:
+In most omics studies, the biological grouping is fixed - Patients are not randomised to disease status, populations are not randomised to environmental exposure, and fields are not randomised to their soil type. When the exposure cannot be randomised, the available strategies become progressively more limited. The appropriate strategy depends on whether the exposure can be assigned and whether relevant factors can be identified before recruitment or processing.
 
 | Strategy | When it applies | What it provides |
 |---|---|---|
-| **Randomisation** | The condition is assigned by the researcher: intervention trials, animal studies, field trials, cell culture | Protection against known and unknown confounders |
+| **Randomisation** | The condition is assigned by the researcher: intervention trials, animal studies, field trials, cell culture | Reduces confounding from known and unknown confounders |
 | **Stratified randomisation** | The condition is assigned and a factor is known to matter (e.g. sex, site) | Guaranteed balance on that factor; randomisation for the rest |
 | **Matching** | Observational; groups already exist | Balance on the matched factors only |
 | **Balanced sampling** | Observational; per-individual matching is not practical | Comparable group-level composition without pairwise pairing |
 | **Recording** | None of the above is possible | The factor remains estimable at analysis, and nothing more |
 
-Which variables to record, and who records them, will be discussed a a later section.
+Which variables to record, and who records them, will be discussed in a later section.
 
 ---
 
-### Randomisation: for variation you cannot name
+### Randomisation to avoid unknown variation
 
 Randomisation is applied in two steps of experimental design: 
 
@@ -89,7 +97,7 @@ The principle is the same at both stages: biological groups should not travel th
 
 The biological grouping is rarely within the researcher's control. What is within their control is the composition of each group with respect to all other variables.
 
-**Sex.** Consideration 1 in Module 1 documented the scale of sex-biased expression across tissues. A single-sex study is a limitation on generalisability that can be stated and worked within. A sex-imbalanced two-group comparison is a confounder. Both sexes represented in both groups is what makes the effect estimable.
+**Sex.** [Consideration 1](module1-2-1.md#consideration-1-cohort-design-and-confounding) in Module 1 documented the scale of sex-biased expression across tissues. A single-sex study is a limitation on generalisability that can be stated and worked within. A sex-imbalanced two-group comparison is a confounder. Both sexes represented in both groups is what makes the effect estimable.
 
 **Age and recruitment source.** Recruiting each group from a different clinical setting bundles age, medication use, comorbidity burden, and collection protocol into the group label simultaneously. The oncology ward versus community health screen example from Module 1 is representative.
 
@@ -123,7 +131,7 @@ A temperature gradient across a plate is the kind of factor that goes unrecorded
 
 ---
 
-### Blocking: for variation you can name
+### Blocking to manage known sources of Variation
 
 Blocking addresses factors known to vary before processing begins. Rather than relying on chance to distribute them, balance is built into the allocation deliberately.
 
@@ -150,20 +158,22 @@ A **shared reference sample** — a pooled aliquot prepared from the study sampl
 
 ---
 
-## Why design is better than correction
+## Design, correction, and interpretation
 
-Correction methods work when the technical factor is orthogonal to the biological comparison: when every group appears at every level of the factor, the technical effect can be estimated independently of the biological signal and removed.
+In an ideal study, confounding and batch effects are prevented at the design stage. Samples are allocated so that biological groups are distributed across known sources of variation, important covariates are recorded, and no technical factor becomes identical to the comparison of interest.
 
-When factor and biology are correlated, that separation is unavailable. The model cannot distinguish the two, and whatever is removed takes biological signal with it.
+That is not always possible. You may inherit a dataset, reuse public data, work with rare samples, or face budget limits that prevent a full redesign. In those settings, the aim shifts from preventing every problem to understanding which comparisons are still interpretable. Correction methods can help when the technical factor is separated from the biological comparison: when every group appears at every level of the factor, the technical effect can be estimated independently of the biological signal and adjusted for.
+
+When factor and biology are strongly correlated, that separation is limited. When they are perfectly confounded, the model cannot distinguish the two, and any correction risks removing biological signal along with technical variation. The result may still be useful, but its limitations need to be stated clearly: some effects may be overestimated, underestimated, or impossible to attribute to biology alone.
 
 ![Dimension reduction before and after batch correction: the structure resolves because the design permitted it](figs_m2/03_Dimension_reduction_before_after_v01.png){style="width:90%; height:auto; min-height:300px"}
 
 <small>[Zhu et al. *Genome Medicine* 9, 108 (2017)](https://link.springer.com/article/10.1186/s13073-017-0492-3){target="_blank"}</small>
 
-Correction resolved the batch structure in this example because the design allowed it. The same method applied to the confounded design would fail — not because the method is worse, but because the information it requires was never generated. The method is the same; the design determines whether it can work.
+Correction resolved the batch structure in this example because the design allowed it. The same method applied to a perfectly confounded design would fail — not because the method is worse, but because the information it requires was never generated. The method is the same; the design determines whether it can work and how cautiously the result must be interpreted.
 
 !!! info "Detecting batch structure at analysis"
-    An unexplained axis in a PCA plot indicates that structure exists in the data. Identifying what that structure corresponds to depends entirely on whether the variable was recorded. Methods for detecting, evaluating, and correcting batch effects are covered in the downstream analysis workshop. Producing a design in which correction is possible is the task of this module.
+    An unexplained axis in a PCA plot indicates that structure exists in the data. Identifying what that structure corresponds to depends entirely on whether the variable was recorded. Methods for detecting, evaluating, and correcting batch effects are covered in the downstream analysis workshop. The task of this module is to design studies in which correction is possible, or to recognise the limits of correction when the design has already been set.
 
 ---
 
