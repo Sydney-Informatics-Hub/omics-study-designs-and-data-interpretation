@@ -1,6 +1,8 @@
 # Module 1.2.1: Design
 
-Every omics study begins with a scientific question: a clearly defined knowledge gap that the experiment is designed to address. The question must be specific enough to determine which molecular layer is relevant, what comparison to make, and what a meaningful result looks like. From the question, four interconnected elements follow: a testable hypothesis, a set of study variables, a cohort design, and a platform selection. Each constrains the next, and all must be resolved before data collection begins.
+Design is the process of turning a biological question into a study that can provide meaningful evidence.
+
+Every omics study begins with a scientific question: a clearly defined knowledge gap that the experiment is designed to address. The question must be specific enough to determine which molecular layer is relevant, what comparison to make, and what a meaningful result looks like. From the question, four interconnected elements follow: a testable hypothesis or clearly defined objective, study variables, a cohort design, and platform selection. These elements influence one another and should be consider before samples are collected or selected and data is generated.
 
 Omics studies also carry costs across three dimensions that make upfront design particularly important:
 
@@ -12,38 +14,38 @@ Omics studies also carry costs across three dimensions that make upfront design 
 
 ## Foundations of study design 
 
-Omics studies rest on four interconnected elements that must be defined before data collection begins: the scientific question, a testable hypothesis, the study variables, and the platform. 
+Omics studies rest on four interconnected elements mentioned above.
 
-The question identifies the knowledge gap; the hypothesis specifies what is expected and at which molecular level; the variables define what is being compared and what needs to be controlled; and the platform determines what the experiment can actually measure. Each element constrains the next.
+The question identifies the knowledge gap; the hypothesis specifies what is expected and at which molecular level; the variables define what is being compared and what needs to be considered; the cohort design determines which biological units and groups will be included; and the platform determines what the experiment can actually measure. Each element constrains the next.
 
 ### Scientific question 
 
-The scientific question defines the scope and purpose of the study. A well-formed question identifies:
+The scientific question defines the scope and purpose of the study. A well formed question makes clear:
 
-1. The biological system of interest
-2. The condition or comparison being investigated
-3. The molecular level at which an answer is sought
+1. What biological material or population is being studied?
+2. What condition, exposure or comparison is being investigated?
+3. Which molecular layer could provide relevant answer?
 
 !!! tip "A useful test"
-    Vague or broad questions like "what is different between cases and controls?" do not constrain design decisions and make it difficult to evaluate whether your results are meaningful.
+    Broad question such as "what differs between cases and controls?" can be useful starting point, but they do not yet define what will be compared, which molecular layer is relevant and make it difficult to evaluate whether your results are meaningful. 
 
-    If the question cannot specify which molecular layer would provide the most informative answer, it is not yet specific enough to design a study around.
+    Before designing the study, the question should be specific enough to justify which molecular layer or combination of layers is most likely to provide relevant evidence.
 
 ### Hypothesis
 
 A testable hypothesis specifies what is expected to differ, at which molecular level, and in which biological context. A hypothesis framed at the wrong molecular layer will produce a study that cannot address the underlying question regardless of execution quality. 
 
-For example, expecting a genetic cause for a phenomenon that is primarily regulated at the level of chromatin accessibility or post-translational modification will generate data that is technically valid but biologically uninformative for the question being asked.
+For example, genome sequencing alone would not directly measure changes in chromatin accessibility or post-translational modification. Although genetic variation can influence these processes, additional epigenomic or proteomic measurements may be needed to address the biological question.
 
 ### Variables
 
-Three categories of variable must be identified before a study begins:
+Three types of variable should be considered when planing a study:
 
 | Type | Definition | Examples |
 |---|---|---|
-| **Independent** | The factor being compared across groups | Disease status, treatment, developmental stage, environmental exposure |
-| **Dependent** | The molecular measurement being taken | Gene expression, protein abundance, methylation state, metabolite concentration |
-| **Confounding** | Variables associated with both the independent variable and the outcome that can distort the apparent relationship between them | Age, sex, batch, tissue composition, collection site |
+| **Condition or exposure** | The biological variable whose relationship with the omics features is being investigated | Disease status, treatment, developmental stage, environmental exposure |
+| **Omics features** | The molecular measurement generated by the platform | Gene expression, protein abundance, methylation state, metabolite concentration |
+| **Potential confounder** | Variables associated with condition/exposure that may also affects the omics features | Age, sex, batch, tissue composition, collection site |
 
 Identifying and planning for confounders is a design task. Variables that are neither controlled nor measured at the time of sample collection cannot be accounted for during analysis.
 
