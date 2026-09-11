@@ -9,9 +9,9 @@ The two previous sections of Module 2 asked whether the measurements were trustw
 
 **Generalisability** describes how far a study's findings extend beyond the specific samples and conditions in which they were produced. Every study is conducted on a defined group like particular individuals, a particular tissue, under particular conditions, at a particular time. The measurements describe that group. Whether they also describe other groups, other tissues, or other conditions is the generalisability question. 
 
-Generalisability is sometimes called **external validity**: the extent to which findings hold outside the study. This is distinct from **internal validity**, which asks whether the comparison within the study is trustworthy: whether the observed difference between groups reflects the biology of interest rather than something else. A study can have strong internal validity and still have narrow generalisability. These are different questions and are addressed by different parts of the design.
+Generalisability is sometimes called **external validity**, meaning how well the findings hold outside the study. This is different from **internal validity**, which asks whether the comparison within the study is trustworthy. In other words, did the observed difference between groups reflect real world biological patterns or some internal factor? A study can have strong internal validity and still have narrow generalisability. These are different questions and they are addressed by different parts of the design.
 
-The narrower a study's scope, the more precisely a comparison can be made — but the less that comparison describes beyond itself. This is not a flaw. A study designed and reported with clear limits is more useful than one that overclaims. The problem is not scope; it is claiming past the design.
+The narrower a study's scope, the more precisely a interpretation can be made, but can make external comparisons difficult. This is not a flaw. A study designed and reported with clear limits is more useful than one that overclaims. The problem is not scope; it is claiming past the design.
 
 ---
 
@@ -19,9 +19,9 @@ The narrower a study's scope, the more precisely a comparison can be made — bu
 
 Before asking how generalisable a finding is, it helps to be precise about what generalising means. There are two distinct components:
 
-1. **Population generalisability**: *who* the finding applies to. This is determined by who was recruited: which individuals, from which settings, at which point in their condition. 
+1. **Population generalisability**: *which samples or organisms* the finding applies to. This is determined by the study population: what was sampled, from which settings, and at which stage of the biological process or disease. 
 
-2. **Biological scope**: *what* the finding covers. This is determined by the platform and sampling strategy: which molecular layer was measured, in which tissue or sample type, at which time point. A transcriptomic finding from liver tissue does not describe what is happening in kidney. 
+2. **Biological scope**: *what* the finding covers. This is determined by the platform and sampling strategy: which molecular layer was measured, in which tissue or sample type, and at which time point. A transcriptomic finding from liver tissue does not describe what is happening in kidney. 
 
 !!! question "Activity: where does the conclusion exceed the design?"
 
@@ -86,11 +86,11 @@ Before asking how generalisable a finding is, it helps to be precise about what 
 
 Two different questions bear on whether a study's conclusions are trustworthy:
 
-1. **Internal validity** asks: within this study, do the observed differences between groups reflect the biology of interest? A study has poor internal validity when something other than the comparison of interest differs between groups and influences the measurements. That other variable is called a **confounder**.
+1. **Internal validity** asks: within this study, do the observed differences between groups reflect the biology of interest? A study has poor internal validity when something other than the comparison of interest differs between groups and influences the measurements. That other variable is called a confounder ([Module2.1.2](module2-1-2.md)).
 
-2. **External validity** asks a different question: does the finding hold beyond this specific study? Even when the internal comparison is clean — groups well-matched, confounders controlled — the study still represents a particular population studied under particular conditions. Whether the result extends to a different population, a different tissue, or a different set of conditions is not answered by the internal analysis.
+2. **External validity** asks a different question: does the finding hold beyond this specific study? Even when the internal comparison is clean (groups well-matched, confounders controlled) the study still represents a particular population studied under particular conditions. Whether the result extends to a different population, a different tissue, or a different set of conditions is not answered by the internal analysis.
 
-Section 2.1.2 covered how to design for internal validity. Comparison groups should be matched on known confounders like age, sex, collection site, processing batch, so that differences between groups can be attributed to the biology being studied rather than to differences in who was recruited or how samples were handled. When this is done well, a difference in gene expression, protein abundance, or metabolite concentration between groups is more likely to reflect the biology of interest.
+[Module2.1.2](module2-1-2.md) covered how to design for internal validity. Comparison groups should be matched on known confounders like age, sex, collection site, processing batch, so that differences between groups can be attributed to the biology being studied rather than to differences in who was recruited or how samples were handled. When this is done well, a difference in gene expression, protein abundance, or metabolite concentration between groups is more likely to reflect the biology of interest.
 
 These two questions are independent:
 
@@ -100,27 +100,29 @@ These two questions are independent:
 
 ---
 
-## Biological scope: what each layer can and cannot generalise
+## Generalisability across molecular layers
 
 [Module 1.1](module1-1.md) introduced the five molecular layers and what each one captures. The generalisation constraints for each layer follow directly from its biology.
 
-**Genome.** DNA sequence is largely stable across all cells of an individual and does not change over time (germline mutations aside). A variant identified in blood DNA is present in liver, muscle, and brain. Genomic findings from one tissue can therefore inform questions about biology in other tissues, because the same variants are present everywhere. The exception is somatic mutations which differ between tissues and must be measured in the tissue of interest.
+**Genome.** DNA sequence is largely stable across all cells of an individual and does not change over time (germline mutations aside). A variant identified in blood DNA is present in liver, muscle, and brain. Genomic findings from one tissue can therefore inform questions about biology in other tissues, because the same variants are present everywhere. However, knowing that a variant exists in a gene does not mean it necessarily changes RNA or protein expression downstream in the tissue of interest. The effect depends on the exact isoform, gene regulation, chromatin context, and other biological factors that determine whether the variant is functional. an additional exception is somatic mutations which differ between tissues and must be measured in the tissue of interest.
 
 **Epigenome.** Chromatin state is established during cell differentiation and maintained differently in each cell type. The regulatory regions that are accessible in a blood cell are not the same as those accessible in a liver cell. An epigenomic result from one tissue describes the regulatory state in that tissue. It does not describe the regulatory state of the same genomic regions in another tissue, even though the underlying DNA sequence is identical.
 
-**Transcriptome.** Gene expression is both tissue-specific and time-sensitive. The same gene may be expressed at very different levels in liver versus skeletal muscle. Expression in the same tissue changes in response to developmental stage, environmental conditions, disease, and treatment. A transcriptomic result is a snapshot: it describes which genes were active in that tissue, at that time point, under those conditions. A result from liver at one time point does not describe liver at a different time point, or what was happening in kidney at any time point.
+**Transcriptome.** Gene expression is both tissue-specific and time-sensitive. The same gene may be expressed at very different levels in liver versus skeletal muscle. Expression in the same tissue changes in response to developmental stage, environmental conditions, disease, and treatment. A transcriptomic result is a snapshot that describes which genes were active in that tissue, at that time point, under those conditions. A result from liver at one time point does not describe liver at a different time point, or what was happening in kidney at any time point.
 
 **Proteome.** Protein abundance reflects not just transcription but also translation efficiency, post-translational modification, and protein degradation rates — none of which the transcriptome directly captures. Like the transcriptome, the proteome is tissue-specific. Plasma and liver proteomics from the same individual measure different things: plasma contains proteins secreted from multiple organs simultaneously, while a tissue proteome reflects what that tissue is actively producing. As covered in [Module 2.1.1](module2-1-1.md) and [Module 2.1.3](module2-1-3.md), proteomic measurements are also sensitive to how samples are handled: degradation, freeze-thaw, and storage conditions change what is detected and at what apparent abundance.
 
-**Metabolome.** Metabolite concentrations change faster than any other layer. Concentrations in blood can shift within minutes in response to food intake, physical activity, time of day, and physiological stress. A metabolomic result is therefore particularly sensitive to the exact conditions under which samples were collected. A plasma sample taken after an overnight fast at 8am reflects a different metabolic state than one taken two hours after lunch. As covered in Section 2.1.3, pre-analytical standardisation — fasting protocol, collection time, handling after collection — is part of study design for metabolomics precisely because these variables directly affect the measurement.
+**Metabolome.** Metabolite concentrations change faster than any other layer. Concentrations in blood can shift within minutes in response to food intake, physical activity, time of day, and physiological stress. A metabolomic result is therefore particularly sensitive to the exact conditions under which samples were collected. A plasma sample taken after an overnight fast at 8am reflects a different metabolic state than one taken two hours after lunch. As covered in [Module 2.1.3](module2-1-3.md), pre-analytical standardisation (fasting protocol, collection time, handling after collection) is part of study design for metabolomics precisely because these variables directly affect the measurement.
 
 A **targeted assay** is a targeted sequencing panel, a selected metabolite panel, a targeted proteomics method. These introduce a further constraint as they measure only the features that were specified in advance. No information is produced about features outside the panel, including features that might turn out to be more relevant than those selected.
 
 ---
 
-## Two ways a conclusion can claim past the design
+## Overclaiming beyond the design
 
-**Extrapolation** applies a result to a population, tissue, or set of conditions that the study did not include. A finding in one wheat variety is extrapolated when claimed to apply to all cereal crops. A finding in male mice is extrapolated when claimed to apply to female mice. A plasma biomarker result is extrapolated when claimed to describe what is happening inside liver cells. The gap may be small or large — that is an empirical question — but the original study does not close it.
+Here are two examples of how a study can overreach beyond what its design actually supports.
+
+**Extrapolation** applies a result to a population, tissue, or set of conditions that the study did not include. A finding in one wheat variety is extrapolated when claimed to apply to all cereal crops. A finding in male mice is extrapolated when claimed to apply to female mice. A plasma biomarker result is extrapolated when claimed to describe what is happening inside liver cells. The gap may be small or large, and that is an empirical question, but the original study does not close it.
 
 **Drawing cell-level conclusions from bulk measurements.** Every bulk omics measurement is an average across all the cells in a sample. A bulk RNA-seq library from a liver biopsy averages gene expression across hepatocytes, endothelial cells, Kupffer cells, and stellate cells simultaneously. A mass spectrometry run on plasma averages protein contributions from the liver, kidney, and immune system at once. A metabolomics run on whole blood reflects the metabolism of red blood cells, white blood cells, and plasma components together.
 
@@ -135,13 +137,13 @@ These two mechanisms are biologically distinct. They point to different processe
 - A higher plasma protein concentration could mean each contributing tissue is secreting more, or that a tissue that is a high secretor of that protein has increased in mass or activity.
 - A higher metabolite concentration in whole blood could reflect altered metabolism across all blood cell types, or a shift in the proportions of those cell types.
 
-Single-cell approaches (such as scRNA-seq, which Section 2.2.2 covered for sample size decisions) address this directly by measuring individual cells. Sorted-population approaches measure specific cell types after physical separation. Bulk measurement is not wrong — it is appropriate for many questions — but the interpretation must be constrained by what the measurement actually represents.
+Single-cell approaches (such as scRNA-seq, which [Module 2.2.2](module2-2-2.md) covered for sample size decisions) address this directly by measuring individual cells. Sorted-population approaches measure specific cell types after physical separation. Bulk measurement is not wrong — it is appropriate for many questions — but the interpretation must be constrained by what the measurement actually represents.
 
 ---
 
 ## Who is represented
 
-Section 2.1.2 covered cohort composition as a source of confounding: when comparison groups differ on unmeasured variables, the measurement differences reflect those variables as well as the biology of interest. The question here is different. Assuming the groups are well-matched and internal validity is adequate, who do the findings describe?
+[Module 2.1.2](module2-1-2.md) covered cohort composition as a source of confounding: when comparison groups differ on unmeasured variables, the measurement differences reflect those variables as well as the biology of interest. The question here is different. Assuming the groups are well-matched and internal validity is adequate, who do the findings describe?
 
 | Characteristic | What it limits |
 |---|---|
@@ -149,9 +151,9 @@ Section 2.1.2 covered cohort composition as a source of confounding: when compar
 | **Recruitment setting** | A specialist referral clinic selects people with more severe or complex presentations than the general population with the same condition. A community health screen selects people who seek preventive care. Both are coherent and well-defined populations. Neither automatically represents all people with a condition. |
 | **Disease stage and treatment** | Long-standing, heavily treated disease produces different molecular patterns than early or untreated disease. Treatment directly alters metabolic pathways, gene expression, and protein abundance. A finding in treated patients reflects the combination of the disease and the treatment. |
 | **Collection conditions** | Time of day, fasting state, season, and prior physical activity influence the transcriptome, proteome, and metabolome. Samples collected under different conditions show measurement differences that may reflect collection context rather than biology. |
-| **Species, strain, or variety** | An inbred mouse strain is genetically homogeneous, which reduces biological variability and improves statistical power (Section 2.2.1) while restricting what the finding applies to. Results from one strain may not hold in another strain, in outbred animals, or in humans. The same applies to plant varieties, microbial strains, and cultured cell lines. |
+| **Species, strain, or variety** | An inbred mouse strain is genetically homogeneous, which reduces biological variability and improves statistical power ([Module 2.1.1](module2-1-1.md)) while restricting what the finding applies to. Results from one strain may not hold in another strain, in outbred animals, or in humans. The same applies to plant varieties, microbial strains, and cultured cell lines. |
 
-There is a genuine trade-off here. Narrowing recruitment — one strain, one sex, one disease stage, one site — reduces biological variability. Lower variability means effects are more detectable. Section 2.2.1 established that statistical power increases as within-group variability decreases: the required sample size is lower when groups are homogeneous. The cost is that the narrower the cohort, the fewer organisms or people the finding applies to. Broader recruitment improves generalisability and increases variability, which requires more samples to detect the same effect size (Section 2.2.1) and introduces more batch structure to manage (Section 2.1.2). These cannot all be optimised simultaneously under a fixed budget.
+There is a genuine trade-off here. Narrowing recruitment — one strain, one sex, one disease stage, one site — reduces biological variability. Lowering variability means effects are more detectable. [Module 2.2.1](module2-2-1.md) established that statistical power increases as within-group variability decreases: the required sample size is lower when groups are homogeneous. The cost is that the narrower the cohort, the fewer organisms or people the finding applies to. Broader recruitment improves generalisability and increases variability, which requires more samples to detect the same effect size ([Module 2.2.1](module2-2-1.md)) and introduces more batch structure to manage ([Module 2.1.2](module2-1-2.md)). These cannot all be optimised simultaneously under a fixed budget.
 
 !!! example "Case study: polygenic risk scores and ancestry"
 
@@ -171,11 +173,11 @@ There is a genuine trade-off here. Narrowing recruitment — one strain, one sex
 
 ---
 
-## Underpowered studies produce unstable findings
+## Underpowered studies an replicating results
 
 A study can fail to replicate in an independent cohort for two different reasons: there is a genuine biological difference between the populations, or the original finding was not stable.
 
-Section 2.2.1 established that underpowered studies — studies with too few independent biological samples relative to the effect size and variability in the data — do not only miss true effects. They also detect signals that depend on which specific samples happened to be in the study. At low sample sizes, the detected features are partly determined by which individuals showed the strongest signal in that particular run. A different set of samples from the same population would produce a partly different result.
+[Module 2.2.1](module2-2-1.md)) established that underpowered studies — studies with too few independent biological samples relative to the effect size and variability in the data — do not only miss true effects. They also detect signals that depend on which specific samples happened to be in the study. At low sample sizes, the detected features are partly determined by which individuals showed the strongest signal in that particular run. A different set of samples from the same population would produce a partly different result.
 
 In transcriptomics, studies have shown that *n* = 3 per group detects between 20% and 40% of truly differential genes. The genes that appear in any given small study are an incomplete and variable subset of the true differential set. A list generated from *n* = 3 will overlap only partially with a list generated from a different set of *n* = 3 samples from the same population.
 
@@ -191,8 +193,8 @@ No single study can fully establish generalisability, and that is not the expect
 
 | Action | What to do | What it addresses | Effort |
 |---|---|---|---|
-| **State the limitation** | In the results and conclusions, name the population (sex, age, species or strain, disease stage, recruitment setting), the tissue or sample type, the molecular layer, the platform, and the collection conditions. Do not claim past them. This requires that metadata was recorded — the checklist in Section 2.1.3 is what makes an honest scope statement possible. | Makes the scope of the finding explicit. Prevents overclaiming. Helps readers assess whether the finding applies to their own context. | Low — done at the writing stage |
-| **Broaden the design** | Recruit from additional sites, include both sexes, use multiple strains or varieties, or extend the time course. Each change widens the population the finding describes. | Directly expands who the finding applies to. | Medium to high — more biological variability means more samples needed (Section 2.2.1), more batch structure to manage (Section 2.1.2), and higher total cost (Section 2.2.2) |
+| **State the limitation** | In the results and conclusions, name the population (sex, age, species or strain, disease stage, recruitment setting), the tissue or sample type, the molecular layer, the platform, and the collection conditions. Do not claim past them. This requires that metadata was recorded — the checklist in [Module 2.1.3](module2-1-3.md)) is what makes an honest scope statement possible. | Makes the scope of the finding explicit. Prevents overclaiming. Helps readers assess whether the finding applies to their own context. | Low — done at the writing stage |
+| **Broaden the design** | Recruit from additional sites, include both sexes, use multiple strains or varieties, or extend the time course. Each change widens the population the finding describes. | Directly expands who the finding applies to. | Medium to high — more biological variability means more samples needed ([Module 2.2.1](module2-2-1.md))), more batch structure to manage ([Module 2.1.2](module2-1-2.md)), and higher total cost ([Module 2.2.2](module2-2-2.md))) |
 | **Validate using public datasets** | Search existing reference repositories — TCGA (cancer genomics), UK Biobank (multi-omic population cohort), GTEx (multi-tissue transcriptomics), MetaboLights (metabolomics), PRIDE (proteomics) — for independent cohorts with different recruitment, protocols, and batch structure. A finding that replicates under different conditions is meaningful evidence of generalisability. | Tests whether the finding holds beyond the original study without collecting new samples. | Low to medium — computation and analysis time, no new sample collection |
 | **Validate using targeted assays** | Use the discovery study to identify a shortlist of candidates. Test those candidates in an independent cohort using lower-cost targeted assays — qPCR, ELISA, targeted mass spectrometry, or a targeted sequencing panel. This is faster and cheaper than re-running the full discovery protocol, and more informative about generalisability than a larger discovery study in the original cohort. | Confirms that key findings replicate in a different population using an independent approach. | Lower than full replication; scales with the size of the candidate list |
 
@@ -212,7 +214,7 @@ No single study can fully establish generalisability, and that is not the expect
     | Platform | Untargeted LC-MS, positive and negative ion mode | — |
     | Sample type | Plasma | Same |
 
-    The study reports 34 metabolites significantly different between groups after FDR correction (the method for correcting for testing thousands of features simultaneously, covered in Section 2.2.1), including acylcarnitines, TCA cycle intermediates, and branched-chain amino acids.
+    The study reports 34 metabolites significantly different between groups after FDR correction (the method for correcting for testing thousands of features simultaneously, covered in [Module 2.2.1](module2-2-1.md)), including acylcarnitines, TCA cycle intermediates, and branched-chain amino acids.
 
     **Part 1: Who does this finding describe?**
 
