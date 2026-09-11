@@ -23,7 +23,7 @@ The figure below connects these five molecular layers through the central dogma 
 !!! question "Research study scenario: unexplained heart failure" 
     A population of patients present to hospital with heart failure and the underlying cause is unclear. We will ask the same question at each molecular layer: ***what is driving these patients' heart failure?***
 
-These examples illustrate what each molecular layer could contribute. They do not imply that every sample type would be feasible or collected in a single study.
+    These examples illustrate what each molecular layer could contribute. They do not imply that every sample type would be feasible or collected in a single study.
 
 ??? note "Layers overlap: the choice is fit, not exclusivity" 
     Most questions can be approached from more than one layer. The lists below show what each layer is best suited to answer, not what it alone can answer.
@@ -85,8 +85,8 @@ A gene's presence tells us nothing about whether it is transcribed, how much pro
 
 The epigenome includes chemical modifications to DNA and histone proteins, together with changes in how accessible the DNA is. These features influence how genes are regulated without changing the DNA sequence. Two major mechanisms contribute to this: 
 
-DNA methylation, silences gene expression when it occurs at gene promoters.
-Histone modifications, which can either compact or open chromatin to restrict or permit transcription.
+- **DNA methylation:** at gene promoters, it is associated with reduced transcription.
+- **Histone modifications:** different modifications are associated with more open or compact chromatin and can influence transcription.
 
 These modifications regulate gene activity without altering the underlying DNA sequence. The epigenome explains a fundamental puzzle in cell biology: how can a skin cell and a neuron contain identical DNA yet perform completely different functions? The answer lies in systematic epigenetic differences between cell types, which influence which genes are accessible and which are less accessible for transcription.
 
@@ -131,7 +131,7 @@ Beyond messenger RNA (mRNA), the transcriptome includes non-coding RNAs like mic
 
 #### Role in biology
 
-The transcriptome is the most dynamic of the molecular layers. Gene expression changes rapidly in response to developmental signals, environmental conditions, disease, and treatment. This responsiveness makes it a sensitive readout of cellular state. But it also means results depend heavily on when and from which tissue the sample was collected. A transcriptomic snapshot captures one moment in a continuous, context dependent process.
+The transcriptome is the highly dynamic of the molecular layers. Gene expression changes rapidly in response to developmental signals, environmental conditions, disease, and treatment. This responsiveness makes it a sensitive readout of cellular state. But it also means results depend heavily on when and from which tissue the sample was collected. A transcriptomic snapshot captures one moment in a continuous, context dependent process.
 
 #### Insights this layer can provide
 
