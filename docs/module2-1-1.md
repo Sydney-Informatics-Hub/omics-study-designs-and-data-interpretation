@@ -123,8 +123,6 @@ Library preparation converts extracted nucleic acid into a form the sequencer ca
 
 Where multiple samples are to be sequenced together, a unique molecular barcode is incorporated into each sample's library during preparation. This is **multiplexing**: barcoded libraries are pooled and sequenced in the same run, then separated computationally during analysis. It is distinct from biological pooling, in which samples are combined before any library preparation step, eliminating the ability to distinguish them ([Consideration 8](module1-2-4.md#consideration-8-computational-and-analytical-controls)).
 
-PLACEHOLDER - A DIAGRAM OF LIBRARY PREPARATION PROCESS
-
 ### Decision 2: read length
 
 The second decision is read length, which is determined by the sequencing platform you choose. Platforms from companies such as Illumina, PacBio, and Oxford Nanopore use different underlying sequencing chemistries, and one of the most consequential differences between them is the lengths of reads they produces. Once library preparation has determined which molecules are in the pool, read length determines how much of each molecule the instrument can sequence in a single pass, and therefore which biological features can be directly observed versus reconstructed computationally.
@@ -166,15 +164,15 @@ The choice follows from the biological question. Quantifying gene expression or 
 
 Unlike DNA and RNA, proteins and metabolites cannot be sequenced as polymers. Instead, we use mass spectrometry to measure molecules by their mass-to-charge ratio (m/z) and signal intensity. In proteomics, proteins are first digested into peptides, whose fragmentation spectra can be matched to known sequences to identify and quantify the parent protein. In metabolomics, small molecules are measured directly. In both cases the output is **intensities**: signal measured as a function of m/z.
 
-PLACEHOLDER - REPLACE THIS WITH OUR OWN DIAGRAM of the workflow — extract, digest, LC separation, ionisation, MS acquisition, spectrum output
+![](figs/2-1_mass_spec.png){width=100%}
 
-![](figs_m2/02_proteomicsWorkflow.png){width=100%}
+<small>Illustration of a bottom-up proteomics workflow. Proteins are extracted and digested into peptides, separated over time by liquid chromatography, ionised, and measured by the mass spectrometer according to their mass-to-charge ratio (m/z). The resulting spectrum (signal intensity vs. m/z) is matched against a reference database to infer peptide and protein identity.</small>
 
 The most common proteomics workflow is called "bottom-up proteomics, where proteins are extracted and digested into shorter peptide fragments before measurement. 
 
 In the bottom-up proteomics workflow, proteins are extracted from the sample and digested into shorter peptide fragments, typically using trypsin, which cleaves at specific amino acid residues. This digestion step is what distinguishes proteomics from sequencing workflows. The resulting peptides are separated over time by liquid chromatography (LC), which spreads them across a gradient so they reach the instrument at different retention times rather than all at once. They are then ionised and introduced into the mass spectrometer, where they are measured according to their m/z. The output is a spectrum: signal intensity on one axis, m/z on the other. Peptide identity is inferred by matching observed spectra against a reference database of theoretical fragmentation patterns.
 
-!!! tip "Metabolomics takes a similar path"
+!!! tip "Metabolomics shares similar steps"
     Because metabolites are small molecules, there is no need for a digestion step. Metabolomics workflows proceed directly from extraction to separation, ionisation, and measurement. 
     
     Metabolite identification relies on matching observed m/z values and fragmentation patterns against spectral libraries, though library coverage remains incomplete for many metabolite classes.
@@ -233,7 +231,9 @@ In **data-dependent acquisition (DDA)**, the instrument first takes a survey sca
 
 In **data-independent acquisition (DIA)**, the instrument fragments all ions within predefined m/z windows, regardless of abundance. Every ion in every window is sampled at every cycle, giving more consistent coverage across runs. The trade-off is more complex spectra that require specialised software to interpret.
 
-PLACEHOLDER DIAGRAM COMPARING THE 2
+![](figs/2-1_dda_dia.png){width=100%}
+
+<small>Comparison of DDA and DIA acquisition. In DDA, only precursor ions above an abundance cut-off in the MS1 scan are selected for fragmentation (MS2, synonymously MS/MS). Low-abundance peptides (grey) are never fragmented and so cannot be identified. In DIA, all precursors across predefined m/z windows are fragmented together regardless of abundance, giving every peptide in every window a fragmentation spectrum at each cycle.</small>
 
 !!! danger "The unrecoverable rule"
     If an ion was never sampled and fragmented during acquisition, no downstream
@@ -245,8 +245,18 @@ PLACEHOLDER DIAGRAM COMPARING THE 2
 This has direct consequences for missing value handling. In DDA, missingness is structured: low-abundance species are disproportionately likely to fall below the selection threshold, and selection itself is stochastic across runs. Missingness in mass spectrometry data can also arise from ionisation efficiency, chromatographic retention, matrix effects, and instrument sensitivity, making it non-random in ways that are not always predictable. Replacing missing values with the sample mean — or any naive imputation — treats absence as a random event and can distort exactly the low-abundance signal a discovery study is designed to detect ([Consideration 6](module1-2-3.md#consideration-6-data-quality-and-cleaning)). Understanding why values are missing
 requires knowing how the data were acquired.
 
-!!! question "Activity: PLACEHOLDER" 
-    Labelling and acquisition activity like the sequencing read assembly one above  
+!!! question "Activity: label-free or labelled?"
+
+    For each scenario, decide whether label-free or labelled quantification is the better fit, and name the deciding factor.
+
+    1. Discovering candidate biomarkers of early-stage disease across 150 patient plasma samples.
+    2. Resolving subtle abundance changes across 6 replicate cell cultures before and after drug treatment.
+    3. Profiling 15 samples from a developmental time course with only one day of instrument time available.
+
+    ??? success "Answers: reveal after group discussion"
+        1. Label-free: 150 samples exceeds any labelling scheme's multiplexing capacity, and discovery work benefits from an unrestricted sample number.
+        2. Labelled: few samples fit easily within one set, and eliminating run-to-run variation is needed to resolve subtle, precise differences.
+        3. Labelled: multiplexing 15 samples into one set cuts the number of runs needed, fitting the limited instrument time.
 
 ---
 
