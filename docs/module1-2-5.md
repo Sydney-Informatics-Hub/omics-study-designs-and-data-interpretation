@@ -12,16 +12,16 @@ Two problems are particularly common in omics reporting:
     |---|---|
     | **Metadata** | Information recorded alongside biological measurements that describes the sample, its collection, processing, and the conditions under which it was generated |
     | **Exploratory analysis** | Analysis intended to generate hypotheses or identify candidates; findings should be treated as provisional |
-    | **Confirmatory analysis** | Analysis designed to test a pre-specified hypothesis in an independent dataset; findings support or refute a biological claim |
-    | **Independent cohort replication** | Testing the same finding using the same measurement platform in a new, independent dataset |
-    | **Orthogonal validation** | Confirming a finding using a different measurement technology — for example, validating an RNA-seq result with RT-qPCR, or a proteomics finding with immunohistochemistry |
+    | **Confirmatory analysis** | Analysis designed to test a hypothesis specified before examining the relevant results, using a prespecified analysis plan |
+    | **Independent cohort replication** | Testing whether a finding holds in new, independent biological samples; the measurement platform may be the same or different |
+    | **Orthogonal validation** | Confirming a finding using a different measurement technology,e.g. validating an RNA-seq result with RT-qPCR, or a proteomics finding with immunohistochemistry |
 
 ## Consideration 9: Metadata completeness
 
 !!! danger "Design principle"
-    Metadata that is not recorded at the time of sample collection cannot be recovered later. Every field left undocumented is a potential source of variation that can never be identified, modelled, or corrected for.
+    Report enough information for others to understand the study design, assess the findings, and reproduce the analysis. This depends on recording relevant metadata and methods throughout the study. Missing important metadata may limit our ability to identify sources of variation and adjust for them reliably.
 
-High-quality omics data is only as interpretable as the information recorded alongside it. Metadata includes:
+High-quality omics data needs context. Reporting should explain which biological samples were studied, how they were processed, and how the results were produced.
 
 | Category | Examples |
 |---|---|
@@ -29,9 +29,7 @@ High-quality omics data is only as interpretable as the information recorded alo
 | **Biological** | Age, sex, tissue type, cell type, developmental stage, organism strain |
 | **Clinical** | Disease status, disease subtype, medication use, comorbidities, clinical scores, time of sample collection |
 
-Metadata provides the context needed to distinguish biological signal from technical artefact. Without it, sources of variation that would otherwise be straightforward to account for become invisible.
-
-Unlike batch effects that are documented, an unknown source of variation cannot be tested, modelled, or corrected. Its only trace may be unexplained structure in the data, suggestive of a problem, but impossible to resolve without the original records.
+Missing metadata can make it difficult to distinguish the biological relationship of interest from other sources of variation. Some information may be recovered from laboratory records or instrument files, and some unwanted variation may be estimated from the data. However, these approaches cannot reliably replace complete records.
 
 | Missing metadata | Platform | Consequence |
 |---|---|---|
@@ -41,19 +39,19 @@ Unlike batch effects that are documented, an unknown source of variation cannot 
 | RNA integrity score | Transcriptomics | Degraded samples cannot be flagged or excluded retrospectively |
 | Reagent lot number | Any | Lot-to-lot variation cannot be accounted for in analysis |
 
-??? example "Case study: When metadata saves the analysis — GTEx and ischaemia time"
+It is good practice to report, what information is missing, which limitations this creates, and how those limitations affect the conclusions.
+
+??? example "Case study: When metadata saves the analysis"
     ![](figs_m1/01_metadata_casestudy_v01.png){width=100%}
 
 ## Consideration 10: Discovery without validation
 
 !!! danger "Design principle"
-    A statistically significant result in a single dataset is a candidate finding, not a confirmed biological truth. The strength of the claim determines the level of validation required.
+    Statistical significance alone does not establish generalisability or mechanism. The evidence needed depends on the claim being made.
 
-Finding a statistically significant result in omics is not the same as finding a generalisable biological truth. When thousands of features are tested simultaneously, some will reach significance by chance — this is why false discovery rate control is applied at all. But controlling the FDR within a dataset does not protect against findings that are real within that dataset but do not replicate elsewhere, driven by cohort-specific technical variation, sampling differences, or the particular composition of the study population.
+Omics analyses often test thousands of features. False discovery rate (FDR) control helps limit false discoveries when the statistical tests and their assumptions are valid. It does not correct a flawed study design or establish that findings will hold in other populations.
 
-Omics studies are especially vulnerable to this because the combination of high feature counts, small sample sizes, and high biological variability between cohorts creates conditions where dataset-specific noise can produce reproducible-looking signals that vanish in independent data. The problem is most severe when results from a discovery analysis are presented as confirmed biology — a generalisable biomarker, a mechanistic pathway, a clinical predictor — without having been tested in an independent cohort or on an independent platform.
-
-Not every omics study requires external validation, but the requirement scales with the strength of the claim:
+A finding may reflect the particular participants, biological context, or technical conditions of a study. Exploratory findings are valuable, but they should be reported as candidates rather than established biomarkers or mechanisms.
 
 | Study type | Example claim | Validation required? |
 |---|---|---|
@@ -61,18 +59,26 @@ Not every omics study requires external validation, but the requirement scales w
 | Confirmatory / mechanistic | "Gene X drives this pathway in disease Y" | Strongly recommended |
 | Translational / clinical | "This signature predicts patient outcome" | Essential |
 
-Validation takes two forms. Independent cohort replication applies the same measurement platform to a new, independent dataset. Orthogonal validation confirms the finding using a different measurement technology — a proteomics result confirmed by immunohistochemistry, an RNA-seq result confirmed by RT-qPCR, a variant call confirmed by Sanger sequencing. Orthogonal validation is particularly important when an independent cohort is not available, and is standard practice before functional follow-up is initiated.
+Different forms of validation address different questions:  
 
-The consequences of skipping this step are documented across platforms. In transcriptomics, gene signatures derived from small or heterogeneous cohorts frequently show limited reproducibility across independent datasets of the same disease. In metabolomics, 72% of reported significant metabolites in one systematic review were identified in only a single study. In proteomics, the gap between biomarker discovery and clinical translation has remained largely unchanged since Rifai and colleagues described it in 2006 — standardisation, validation burden, and regulatory compliance continue to be cited as unresolved barriers nearly two decades later. <small>[Rifai et al. *Nature Biotechnology* 2006](https://doi.org/10.1038/nbt1235){target="_blank"} · [Proceedings of the 68th Benzon Foundation Symposium. *Journal of Proteome Research* 2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC11652764/){target="_blank"}</small>
+**Independent cohort replication:** Does the finding hold in new, independent biological samples?  
+**Orthogonal validation:** Does a different measurement method support the finding, for example, checking a mass-spectrometry protein measurement using an appropriate immunoassay,an RNA-seq result confirmed by RT-qPCR, a variant call confirmed by Sanger sequencing?  
+**Functional validation:** Does experimentally changing the proposed biological component produce the predicted response?  
 
-??? example "Case study: Two decades of unreplicable genetics — the candidate gene era"
-    From the 1990s through the mid-2000s, hundreds of candidate gene association studies were published linking specific genetic variants to psychiatric and complex diseases. Most had sample sizes of 100–500. Results were statistically significant within each dataset.
+Orthogonal validation on the same samples can strengthen confidence in the measurement, but it does not establish generalisability. Independent replication does not, by itself, establish a mechanism.
 
-    When adequately powered genome-wide association studies arrived (n > 10,000), the vast majority of these associations vanished. A landmark 2019 reanalysis of 18 candidate genes studied for decades in relation to depression found that none replicated in a sample of over 620,000 individuals.
+The challenges of reproducibility and validation are documented across platforms. In transcriptomics, gene signatures derived from small or heterogeneous cohorts frequently show limited reproducibility across independent datasets of the same disease. In metabolomics, an analysis of 244 human serum studies investigating cancer biomarkers found that 72% of the metabolites reported as statistically significant were reported by only one study. In proteomics, translating biomarker discoveries into clinical use remains challenging, with standardisation and validation continuing to be discussed as barriers nearly two decades after Rifai and colleagues highlighted them in 2006.
 
-    The candidate gene literature was not fraudulent — it was underpowered discovery presented as confirmed biology, without independent replication in adequately sized cohorts. Modern GWAS pre-register replication cohorts before publication precisely because of this history.
+<small>[Rifai et al. *Nature Biotechnology* 2006](https://doi.org/10.1038/nbt1235){target="_blank"} · [Proceedings of the 68th Benzon Foundation Symposium. *Molecular & Cellular Proteomics* 2024](https://pmc.ncbi.nlm.nih.gov/articles/PMC11652764/){target="_blank"}</small>
 
-    <small>[Border et al. *American Journal of Psychiatry* 2019](https://psychiatryonline.org/doi/10.1176/appi.ajp.2018.18070881){target="_blank"} · [Ioannidis et al. *Nature Genetics* 2009](https://doi.org/10.1038/ng.295){target="_blank"}</small>
+??? example "Case study: Two decades of unreplicable genetics, the candidate gene era"
+    From the 1990s through the mid-2000s, hundreds of candidate gene association studies were published linking specific genetic variants to psychiatric and complex diseases. Many reported statistically significant associations in small samples.
+
+    Larger studies subsequently challenged many of these associations. A landmark 2019 analysis of 18 extensively studied depression candidate genes across multiple large samples found no clear support for the historical candidate-gene hypotheses.
+
+    The lesson is that statistically significant findings from small studies need adequately powered independent replication before being treated as established biology. It was underpowered discovery presented as confirmed biology, without independent replication in adequately sized cohorts. 
+
+    <small>[Border et al. *American Journal of Psychiatry* 2019](https://psychiatryonline.org/doi/10.1176/appi.ajp.2018.18070881){target="_blank"}</small><small>[Cochran et al. *A reproducibility crisis for clinical metabolomics studies*](https://pmc.ncbi.nlm.nih.gov/articles/PMC11999569/){target="_blank"}</small>
 
 ---
 

@@ -6,24 +6,25 @@ Data reach a study one of two ways: you generate them yourself, or you use what 
 |---|---|---|
 | **Benefits** | Full control over sample selection, collection protocol, processing conditions, and batch structure | Faster and lower cost; large existing cohorts may not be reproducible |
 | **Burdens** | Time-intensive; recruitment, extraction, and sequencing happen in stages, introducing batch structure by default | Batch structure is fixed and cannot be redesigned; cohort, protocol, instrument, and pipeline are bundled into a single label you cannot separate |
-| **Key risk** | Batches that align with your biological comparison — e.g. cases processed in year one and controls in year three | Using a public dataset to supply one arm of a comparison: disease and study become perfectly confounded |
-| **Key advantage** | You choose which samples go into which batch — the fix is available before any processing begins | Excellent as an independent validation cohort, or when each dataset contributes both comparison groups |
+| **Key risk** | Batches that align with your biological comparison e.g. cases processed in year one and controls in year three | Using a public dataset to supply one arm of a comparison: disease and study become perfectly confounded |
+| **Key advantage** | You choose which samples go into which batch, the fix is available before any processing begins | Excellent as an independent validation cohort, or when each dataset contributes both comparison groups |
 
 ## Path A: collect and sequence your own 
 
-In most studies, samples cannot processed all at once. Recruitment of participants runs over months or years, wet lab work happen on different days, and sequencing occurs run by run. Each of these groupings is a **batch**.
+In most studies, samples cannot processed all at once. Laboratory processing may occur on different days, using different reagent lots, and data acquisition may occur across multiple instrument runs. Samples processed or measured under the same technical conditions form a batch. Recruitment time may be associated with batch or other temporal differences, but it is not itself necessarily a technical batch.
 
-Batches are unavoidable, they are a structural feature of how omics work is done. They become a problem when a batch aligns with the biological comparison. If all cases were processed in one batch and all controls in another, batch and biology are the same variable and cannot be separated.
+Batches are unavoidable, they are a structural feature of how omics work is done.Batch effects can increase variability and reduce power. When batch membership also aligns with the biological comparison, they can bias the results. If all cases were processed in one batch and all controls in another, batch and biology are the same variable and cannot be separated.
 
-On this path, you decide which samples go into which batch. That means the problem is preventable: distributing cases and controls across batches, and recording which sample was processed when, removes the confound before it occurs.
+On this path, you decide which samples go into which batch. That means the problem is preventable: distributing cases and controls across batches reduces the risk of complete confounding. Recording when and how each sample was processed allows remaining batch effects to be evaluated during analysis.
 
 ## Path B: using someone else's data
 
-When using existing data, the batch structure is fixed. The entire study, cohort composition, collection protocol, extraction kit, instrument, and analysis pipeline, is bundled together and cannot be separated.
+When using existing data, the batch structure is fixed. Study origin may be associated with cohort composition, collection protocol, extraction kit, instrument and analysis pipeline. These effects can be difficult or impossible to separate when study origin is perfectly aligned with the biological comparison.
 
 The most common problem arises when existing data supplies only one arm of a comparison: your own cases paired with public controls, or vice versa. Every case now shares one study and every control shares another. Disease status and study of origin are the same variable. The data cannot tell you whether the observed differences between groups reflect biology or the difference between two laboratories.
 
-Whether existing data can supply one arm of a comparison depends on the platform. In genomics, using a public control population is a well-established and accepted practice, genotype data is largely robust to differences in collection and processing protocol. In expression-based omics (transcriptomics, proteomics, metabolomics, epigenomics), the measured signal is highly sensitive to collection conditions. Mixing your own samples with a public dataset on these platforms risks introducing technical differences that are indistinguishable from biological signal.
+Whether existing data can supply one arm of a comparison depends on the platform. Public controls can sometimes be used in genomic studies, particularly for germline genotype data. However, ancestry, assay platform, sequencing coverage, variant calling and quality control procedures must be sufficiently comparable or appropriately harmonised. Otherwise, study of origin may remain confounded with case–control status.
+In expression-based omics (transcriptomics, proteomics, metabolomics, epigenomics), the measured signal is highly sensitive to collection conditions. Mixing your own samples with a public dataset on these platforms risks introducing technical differences that are indistinguishable from biological signal.
 
 Public datasets are well-suited as independent validation cohorts for findings already made in your own data, or when each dataset contributes samples from both comparison groups.
 
@@ -35,13 +36,13 @@ A **batch effect** is a systematic technical bias introduced when samples are pr
 
 *Unrecoverable design example:* All cases were processed in Batch 1 (2023) and all controls in Batch 2 (2026). Any observed differences between groups are driven by processing year as much as by biology. Because batch and biological group are perfectly aligned, there is no way to determine which differences are technical and which are real. This design is unrecoverable.
 
-*Recoverable design example:* Cases and controls are distributed across both batches. Both groups are represented in each batch, so the batch effect can be estimated independently of the biological comparison. The batch effect is now separable and can be corrected statistically. The biology is recoverable.
+*Recoverable design example:* Cases and controls are distributed across both batches. Both groups are represented in each batch, so the batch effect can be estimated independently of the biological comparison. The batch effect is now separable from the biological comparison and can be modelled during analysis, although statistical adjustment may not remove it completely.
 
 ![Batch effect fully confounded with biology](figs_m1/01_batch_Effect_v02.png){width=90%}
 
 ### Controlling for batch effects
 
-When batch effects are present but not confounded with biology, they can be modelled and removed. This is only possible when batch membership has been recorded in the study metadata, which is why systematic record-keeping is essential at the point of data collection.
+When batch effects are present but not confounded with biology, they can be modelled and adjusted for. This is only possible when batch membership has been recorded in the study metadata, which is why systematic record-keeping is essential at the point of data collection.
 
 Common approaches include:
 
@@ -54,12 +55,12 @@ Common approaches include:
 
 Statistical approaches for removing residual batch effects after acquisition are covered in Stage 4.
 
-None of these methods can recover signal from a design where batch is fully confounded with biology. They require that at least some samples from each biological group appear in each batch.
+None of these methods can recover signal from a design where batch is fully confounded with biology. Adjustment requires a design in which batch and the biological comparison can be distinguished. Including both groups in every batch is a strong design choice.
 
-??? example "Case Study: When batch effects reach the clinic"
+??? example "Case Study: When unreproducible analysis reaches the clinic"
 
-    Between 2006 and 2011, Anil Potti and colleagues at Duke published a 
-    series of high profile papers claiming to have developed genomic 
+    Researchers at Duke published a 
+    series of high profile papers claiming to have developed gene expression based 
     predictors of chemotherapy response in cancer patients using gene 
     expression microarrays. Three clinical trials were opened using these 
     predictors to assign patients to treatment arms.
@@ -72,9 +73,7 @@ None of these methods can recover signal from a design where batch is fully conf
 
     ![Duke clinical trial retraction timeline](figs_m1/01_duke_case_study_01.png){width=90%}
 
-    **Outcome:** The trials were halted. The case 
-    became a landmark example of how undetected batch effects, combined 
-    with lack of reproducibility, can cause direct patient harm.
+    ***Outcome***: The clinical trials were subsequently halted amid concerns about the validity of the predictors. The case became an important example of how poor documentation and data-processing errors can undermine reproducibility and potentially place patients at risk.
     <small>Ref: [Baggerly & Coombes, *Ann. Appl. Stat.* 2009](https://doi.org/10.1214/09-AOAS291){target="_blank"}</small>
 
 ---
@@ -92,23 +91,23 @@ Controls generally fall into four categories:
 
 | Control type | Purpose | Examples | Failure indicates |
 |---|---|---|---|
-| **Negative control** | Detect contamination introduced during processing | Extraction blank, no-template control, solvent blank | Contamination present in all samples processed in the same batch |
-| **Positive control** | Confirm the assay is functioning | Reference RNA of known concentration, known peptide mixture | Results from the same run cannot be trusted |
-| **Spike-in** | Assess technical variability between samples; support normalisation | ERCC spike-ins (RNA-seq), stable isotope-labelled internal standards (metabolomics, proteomics) | Run-to-run variation is confounded with biological signal |
-| **Technical replicate** | Estimate measurement reproducibility | Repeated measurement of the same sample across runs or within a run | Instability in the assay or instrument |
+| **Negative control** | Detect contamination introduced during processing | Extraction blank, no-template control, solvent blank | Possible contamination; investigate its extent in associated samples |
+| **Positive control** | Confirm the assay is functioning | Reference RNA of known concentration, known peptide mixture | Possible assay or run failure requiring investigation |
+| **Spike-in** | Assess technical variability between samples; support normalisation | ERCC spike-ins (RNA-seq), stable isotope-labelled internal standards (metabolomics, proteomics) | Technical variability or inconsistent spike-in addition or recovery |
+| **Technical replicate** | Estimate measurement reproducibility | Repeated measurement of the same sample across runs or within a run | Greater than expected measurement variability |
 
 Some platforms have additional platform-specific controls that address particular sources of technical failure:
 
-| Molecular layer | Sequencing type | Control | What it detects |
+| Domain | Platform or assay | Control or QC assessment | What it detects |
 |---|---|---|---|
-| Genome | 16S metagenomics | Negative extraction control | Kit reagent contamination which is a known problem with low-biomass samples |
-| Transcriptome | Bulk RNA-seq | RNA integrity (RIN score) | Degradation during extraction or storage |
-| Transcriptome | Single-cell RNA-seq | Empty droplet controls; ambient RNA assessment | Doublets, cell-free RNA contaminating the droplets |
-| Proteome | Liquid chromatography mass spectrometry | Blank injections; digestion controls | Carryover between runs; incomplete digestion |
-| Metabolome | Liquid/gas chromatography mass spectrometry | Pooled QC samples at regular intervals | Instrument drift across the run; used for signal correction |
-| Epigenome | DNA methylation | Bisulfite conversion efficiency control | Incomplete conversion, which inflates apparent unmethylated signal |
+| Microbiome | 16S amplicon sequencing | Negative extraction control | Reagent or extraction contamination, which can strongly affect low-biomass samples |
+| Transcriptome | Bulk RNA-seq | RNA integrity number (RIN) | RNA degradation before or during extraction, transport, or storage |
+| Transcriptome | Single-cell RNA-seq | Empty-droplet and ambient-RNA assessment | Empty droplets and cell-free RNA contaminating cell-containing droplets |
+| Proteome | Liquid chromatography–mass spectrometry | Blank injections; digestion controls | Carryover between runs; incomplete digestion |
+| Metabolome | Liquid/gas chromatography–mass spectrometry | Pooled QC samples at regular intervals | Instrument drift across the run; supports assessment and correction of signal variation |
+| Epigenome | Bisulfite-based DNA methylation assay | Bisulfite conversion-efficiency control | Incomplete conversion, which inflates apparent methylation |
 
-The appropriate controls for a given study depend on the platform, the sample type, and the expected sources of technical variability. They should be identified during study design, budgeted for as part of the sample count, and randomised into the run order alongside the experimental samples — not added at the end of a run as an afterthought.
+The appropriate controls for a given study depend on the platform, the sample type, and the expected sources of technical variability. They should be identified before the relevant processing or acquisition step and included in the study budget. Their placement should follow their purpose: experimental samples may be randomised, whereas pooled QC samples are commonly placed at regular intervals and blanks may be positioned strategically to detect contamination or carryover.
 
 ---
 
@@ -116,6 +115,6 @@ The appropriate controls for a given study depend on the platform, the sample ty
     - Data can be generated or reused from existing sources; the key difference is how much control you have over the technical structure of the data
     - Batches are unavoidable in omics studies. They become a problem when batch membership aligns with the biological comparison
     - Distributing comparison groups across batches and recording batch membership as metadata are the primary defences against batch confounding. Statistical correction methods can address residual batch effects when the design allows batch to be estimated independently of biology
-    - Using a public dataset to supply a single arm of a comparison is problematic for expression-based omics, where measured signal is sensitive to collection and processing conditions. In genomics, using a public control population is an accepted practice
-    - Experimental controls are distinct from biological replicates — they monitor the behaviour of the measurement process, not biological variability. They must be planned before data collection begins and cannot be added retrospectively
+    -Using a public dataset to supply one comparison group can confound study origin with biological condition. Even in genomic studies, ancestry, platform, variant calling and quality-control procedures must be comparable or appropriately harmonised. 
+    - Experimental controls are distinct from biological replicates, they monitor the behaviour of the measurement process, not biological variability. They must be planned before data collection begins and cannot be added retrospectively
     - The appropriate controls depend on the platform. Negative controls detect contamination; positive controls confirm assay function; spike-ins support normalisation and detect run-to-run variation; technical replicates estimate measurement reproducibility.
