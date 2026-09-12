@@ -1,67 +1,55 @@
-## Module 1.2: Activity
- 
-!!! question "Part 1: Activity, Analyse this study design"
+# Module 1.2: Activity
 
-    A 2012 gut microbiome study collected microbiota from five pregnant women 
-    per condition, pooled them into a single inoculum, and inoculated 
-    six germ-free mice per condition. Statistics were performed on n = 6 mice.
+!!! question "Analyse this study design"
+    
+
+    **Study design**
+
+    For the mouse transplantation experiment in a 2012 study, researchers used stool samples from the **same five women** in early pregnancy (**T1**) and late pregnancy (**T3**).
+
+    They combined the samples into **one mixture per trimester** and gave each mixture to germ-free mice.
+    
+    The fat-gain analysis included six mice receiving the T1 mixture and five receiving the T3 mixture, after one T3 mouse was excluded as an outlier.
+
+    **Research question**
+
+    Does gut microbiota from late pregnancy cause greater fat gain in mice than microbiota from early pregnancy, and does this effect hold across different women?
 
     ![](figs_m1/01_pseudoreplication_activity01_v01.png){width=90%}
 
-    <small>Ref: Koren et al., *Cell* 150, 470–480 (2012)</small>
+    <small>Ref: [Koren et al., *Cell* 150, 470–480 (2012), Figure 6C](https://pmc.ncbi.nlm.nih.gov/articles/PMC3505857/#F6)</small>
 
-    Discuss in your group:
+    **Discuss in your group**
 
-    1. What is the true experimental unit, the mouse or the human donor?
-    2. What is the actual n per condition?
-    3. Are the six mice independent biological replicates? Why or why not?
-    4. What does this mean for the p-values reported?
-    5. What information would you need to determine if this is recoverable?
-    6. Is this error recoverable after data collection?
+    1. Can this design show that the effect holds across different women?
+    2. Do mice receiving the same mixture count as independent donor replicates?
+    3. For this research question, should **n** count the mice or the donor pools?
+    4. Can reanalysis fix the missing donor replication, or are new experiments needed?
 
-<!--
+<!-- 
 ??? success "Answers: reveal after group discussion"
 
-    **Q1. True experimental unit?**  
-    The human donor, not the mouse.
+    **1. Can this design show that the effect holds across different women?**
 
-    **Q2. Actual n per condition?**  
-    n = 1. There was only one pooled inoculum per condition.
+    No. There is only **one mixture per trimester**, so we cannot assess how the transplantation effect varies between women.
 
-    **Q3. Are the six mice independent biological replicates?**  
-    No, all six received the same inoculum. They are technical 
-    replicates, not biological replicates.
+    **2. Do the mice count as independent donor replicates?**
 
-    **Q4. What does this mean for the p-values?**  
-    They are uninterpretable. Degrees of freedom are artificially 
-    inflated, producing false precision and invalid inference.
+    No. Every mouse in a group received the same mixture. Differences between them reflect mouse-to-mouse responses to that mixture, not differences between women.
 
-**Q5. What information would you need to determine if this
-    is recoverable?**
-    You would need to know whether individual donor samples were
-    kept separate before pooling. Specifically:
+    **3. Should n count mice or independent donor pools?**
 
-    - Were aliquots from each donor preserved individually
-      before pooling into the shared inoculum?
-    - Is DNA or 16S sequence data available per donor that
-      could distinguish their microbial contributions?
-    - Were any mice inoculated with single-donor material
-      rather than the pool?
+    For this donor-level question, count **independent donor pools: n = 1 per trimester**.
 
-        If all donor material was irreversibly pooled and no
-        individual aliquots were retained, this is **unrecoverable**.
-        The biological contributions of individual donors cannot
-        be separated from a mixed inoculum after the fact.
-        The experiment would need to be repeated with one
-        inoculum per donor.
+    The mouse-level analysis can still test whether these two mixtures affect mice differently. It cannot establish whether the effect holds across different women. More mice do not increase donor replication.
 
-    **Q6. Is this recoverable?**  
-    No: unrecoverable. Pooling happened at sample collection. 
-    Donor contributions cannot be separated retrospectively.
+    **4. Can reanalysis fix this?**
 
-    <small>Ref: Wagner & Kleiner, *Nat Commun* 16, 7263 (2025)</small>
+    **New transplantation experiments are needed**, using separate donor samples. Reanalysis cannot recover donor-specific effects that were never measured.
 
-    ![](figs_m1/02_pseudoreplication_activity01_v02.png){width=100%}
+    **Take-home message**
+
+    More mice receiving the same mixture cannot replace independent replication across donors.
 
 -->
- 
+<!-- FACILITATOR NOTES — NOT DISPLAYED Main message ------------ Keep the discussion focused on the stated question: does the transplantation effect hold across different women? The experiment measures responses to two mixtures. It does not measure separate transplantation effects across donors. If someone asks: “How can you do statistics with n = 1?” ------------------------------------------------------- Say: “We cannot estimate variation across donor pools with only one pool per trimester. The published analysis uses variation between mice, which answers a narrower question.” If someone asks: “So was the study wrong?” ------------------------------------------ Say: “We are examining the limits of this transplantation experiment, not judging the whole paper. The mouse comparison can provide evidence about these two mixtures. It cannot establish that the effect holds across women. The paper also contains a separate human-cohort analysis.” If someone says: “The mouse is the experimental unit” ----------------------------------------------------- Ask: “An experimental unit for which comparison?” Explain: “That can be correct for comparing the two mixtures, if allocation and housing support independence. But another mouse receiving the same mixture does not add another independent donor pool.” If someone calls the mice technical replicates ----------------------------------------------- Say: “They are different animals with real variation in their responses. They are not repeated measurements of the same sample. But they all received the same donor mixture within each group.” If someone asks whether donor sequencing could fix this -------------------------------------------------------- Say: “The authors sequenced individual donor samples as well as the mixtures. That tells us about the microbiomes. It does not tell us how each donor's sample would have affected mice if transplanted separately.” Suitable retained samples could support new transplantation experiments; they cannot repair the existing mouse data through reanalysis. If someone notices the paired design -------------------------------------- Say: “The same women contributed at both timepoints, so donor identity is held constant. Pooling still prevents us from measuring the transplantation effect separately for each woman.” If housing or the excluded mouse comes up ------------------------------------------- Housing and allocation matter for mouse independence. Do not assume the housing arrangement from the activity figure. Figure 6C reports six T1 mice and five T3 mice after one T3 outlier was removed. The legend alone does not establish whether that exclusion was justified. The donor-replication problem remains either way. Before displaying the figure ----------------------------- Ensure it shows the same five women contributing at T1 and T3, one mixture per trimester, and the correct analysed mouse numbers for Figure 6C. Do not label the mice as technical replicates. -->

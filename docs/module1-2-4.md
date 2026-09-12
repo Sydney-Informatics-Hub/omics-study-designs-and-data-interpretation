@@ -4,86 +4,100 @@ By the time data reach the analysis stage, the decisions that most determine wha
 
 The statistical models used to answer our scientific questions must reflect the structure of the data. This includes: 
 
-- Distribution of the outcome variable
+- Types of variables
+- Distributional assumptions appropriate to the outcome (omics features)
 - Dependencies between observations
 - Covariates that need to be accounted for
 
-A model that ignores the hierarchical structure of the data will produce test statistics that are too optimistic. A model that applies the wrong distributional assumption to count data, or that treats a continuous outcome as categorical, will misrepresent the evidence. 
+A model that ignores dependence between observations can overstate confidence
+in the results. Inappropriate distributional assumptions can also lead to
+unreliable conclusions. Converting a continuous outcome into categories
+discards information and can reduce statistical power.
 
-This stage also introduces its own sources of error. Testing tens of thousands of features simultaneously, as is routine in omics, guarantees that some will appear significant by chance unless the false discovery rate is explicitly controlled. Treating multiple measurements from the same individual as independent observations inflates the effective sample size in ways that can produce thousands of false positives. Computational controls help quantify these risks, but they cannot substitute for experimental controls that were never included.
+This stage also introduces its own sources of error. Testing thousands of features, as is routine in omics, increases the risk of chance findings. Multiple-testing correction, such as false discovery rate control, helps limit false discoveries but does not eliminate them. Treating multiple measurements from the same individual as independent observations inflates the effective sample size in ways that can produce thousands of false positives. Computational controls help quantify these risks, but they cannot substitute for experimental controls that were never included.
 
-## Consideration 7: Adequate controls 
+## Consideration 7: Experimental and analytical controls
 
 !!! danger "Design principle"
-    Computational controls can quantify and partially mitigate technical noise in the data. They cannot compensate for experimental controls that were never included, or recover information that was never collected.
+
+    Experimental controls help assess the measurement process. Analytical
+    controls help assess the reliability of the analysis. Both are needed:
+    analytical controls cannot reliably replace missing experimental controls.
 
 Analytical controls are not a substitute for experimental controls. Where experimental controls (negative controls, spike-ins, technical replicates) assess whether the measurement process itself was reliable, computational controls can be used to assess whether analytical results are more extreme than expected by chance, or whether identifications meet a minimum confidence threshold.
 
 In proteomics, decoy databases (constructed from reversed or randomised protein sequences) are searched alongside the real database. Because a match to a decoy sequence cannot be biologically real, the rate at which decoys are matched gives an empirical estimate of the false discovery rate among the real identifications. 
 
-In statistical analysis more broadly, permutation tests build a null distribution by repeatedly shuffling the observed group labels and recomputing the test statistic; the proportion of permuted statistics as extreme as the observed value estimates the probability of the result arising by chance.
+Permutation tests assess how unusual the observed result would be if there were no association between the groups and the measurements. They rearrange group labels and repeat the analysis to see how often a result at least as extreme occurs. The rearrangement must respect the study design, including pairing or repeated measurements.
 
-??? example "Case Study: The placental microbiome"
+??? example "Case study: The placental microbiome"
 
-    Multiple high profile studies reported the existence of a
-    placental microbiome using 16S amplicon sequencing; a 
-    clinically significant claim with implications for preterm
-    birth and neonatal health.
+    Some studies reported a resident community of microorganisms in the
+    placenta. However, the amount of microbial DNA detected in placental
+    samples is typically very low, making their sequencing results
+    particularly vulnerable to contamination.
 
-    All of these studies lacked negative extraction controls.
-    Samples processed through the full extraction workflow but
-    containing no input material. When later studies included
-    proper controls, the bacterial signal was traced to reagent
-    and laboratory contamination, not placental tissue.
+    Later investigations using extensive controls found no evidence of a
+    resident placental microbiome. Much of the detected bacterial DNA was
+    attributable to contamination introduced during sample collection or
+    laboratory processing. This does not mean that bacteria can never be
+    present: occasional pathogens are different from a resident microbial
+    community.
 
-    Subsequent studies with appropriate controls found no
-    evidence of a true placental microbiome. The earlier
-    conclusions were entirely artefactual, and the clinical
-    follow up work they generated was misdirected.
+    **Why experimental controls matter**
 
-    **Why controls would have caught this:**
-    A negative extraction control processed alongside placental
-    samples would have shown the same bacterial signal in the
-    no input control as in the tissue samples, immediately
-    flagging contamination before any biological conclusions
-    were drawn.
+    A negative extraction control contains no tissue but passes through the
+    same extraction workflow as the samples. Bacterial DNA detected in these
+    controls helps identify contamination from reagents or processing.
+    Comparing samples with controls helps assess whether the signal supports
+    a biological interpretation.
+
+    This illustrates a limit of computational analysis: detecting bacterial
+    sequences does not, by itself, establish that those bacteria originated
+    in the tissue.
 
     <small>
-    Wagner & Kleiner. How thoughtful experimental design can
-    empower biologists in the omics era.
-    *Nature Communications* 16, 7263 (2025).
-    [doi:10.1038/s41467-025-62616-x](https://www.nature.com/articles/s41467-025-62616-x){target="_blank"}
+    de Goffau MC et al. Human placenta has no microbiome but can contain
+    potential pathogens. *Nature* 572, 329–334 (2019).
+    [doi:10.1038/s41586-019-1451-5](https://www.nature.com/articles/s41586-019-1451-5){target="_blank"}
 
-    Salter et al. Reagent and laboratory contamination can critically
+    Salter SJ et al. Reagent and laboratory contamination can critically
     impact sequence-based microbiome analyses.
     *BMC Biology* 12, 87 (2014).
-    [doi:10.1186/s12915-014-0087-z](https://doi.org/10.1186/s12915-014-0087-z){target="_blank"}
-    ← **primary reference — first systematic demonstration of kit contamination**
+    [doi:10.1186/s12915-014-0087-z](https://link.springer.com/article/10.1186/s12915-014-0087-z){target="_blank"}
     </small>
 
-!!! tip "The unrecoverable rule"
-    If information was never collected or never measured, it cannot be reconstructed retrospectively. At best, its impact can be assessed, acknowledged, or partially mitigated. In many situations, the only definitive solution is to redesign and repeat the study.
+!!! danger "What analysis cannot fix"
 
+    Analysis cannot reliably compensate for missing experimental controls or
+    essential information that was never collected. Sometimes the impact can
+    be assessed or partially mitigated, but resolving the uncertainty may
+    require additional measurements or a new experiment.
 ---
 
-## Consideration 8: Computational and analytical controls
+## Consideration 8: Independent replication and pseudoreplication
 
 !!! danger "Design principle"
     Statistical inference should be performed at the level of the experimental unit, not the observational unit. Treating multiple measurements from the same experimental unit as independent replicates inflates the effective sample size and overstates confidence in the results.
 
-In the simplest omics study designs, the unit of treatment and the unit of measurement are the same thing: one patient, one sample, one measurement. The distinction between experimental and observational units only becomes critical when they come apart, and in omics, they come apart frequently.
+As introduced earlier, several measurements may come from the same
+biological unit. Multiple biopsies or cells from one patient provide more
+information about that patient, but do not increase the number of
+independent patients studied.
 
-The **experimental unit** is the smallest unit that could independently have received a different condition or treatment. In a case-control cohort, that is each patient. In an animal study, each mouse. In a cell culture experiment, each independently treated flask. The **observational unit** is the entity a measurement is actually taken on — a tissue biopsy, a single cell, a technical replicate measurement. In the simplest designs these are the same. When they are not, treating observational units as experimental units is pseudoreplication.
+Treating these measurements as independent biological replicates is
+**pseudoreplication**. The analysis must account for their shared origin.
 
-This happens in two ways:
+Two design choices require particular care when counting independent replicates: subsampling and pooling.
 
-- **Subsampling** occurs when many observational units are profiled from a single experimental unit, thousands of cells from one donor, multiple biopsies from one patient, repeated measurements from one sample. The donor, patient, or sample is still the experimental unit; the cells, biopsies, or measurements are nested within it and are not independent. 
-- **Pooling** collapses multiple biological units into a single experimental unit before measurement. However many donors contributed to a pooled sample, only one pooled unit was independently created. Those donors are no longer experimental units in their own right once their material is combined.
+- **Subsampling** means measuring several parts of the same biological unit, such as multiple cells from one donor or multiple biopsies from one patient. These measurements provide more information about that individual, but they do not increase the number of independent individuals studied. The analysis must account for their shared origin.
 
-Both failures produce the same statistical consequence: the effective sample size is larger than the true number of independent units, degrees of freedom are inflated, and confidence in the results is overstated. The difference is where in the workflow the problem is introduced. Pooling fixes the number of true experimental units before data collection begins; subsampling is a modelling choice made at analysis, and is sometimes correctable there.
+- **Pooling** Pooling combines material from several biological units into one measured sample. For example, combining samples from five donors into one pool produces one pooled measurement, not five separate donor measurements. Individual differences can no longer be directly assessed from that measurement. Replication depends on how many independent pools were created and how they were constructed.
+
+Neither subsampling nor pooling is inherently a mistake. Pseudoreplication occurs when subsamples are treated as independent biological replicates, or when donors contributing to a pool are counted as separately measured replicates. This can overstate confidence in the results. Dependence between subsamples can often be handled in the analysis, but pooling generally prevents direct assessment of individual differences.
 
 !!! info "Multiplexing is not pooling"
-    Multiplexing combines separately barcoded libraries onto the same sequencing run for efficiency. Each library traces back to one experimental unit, and demultiplexing after sequencing recovers them as fully independent samples. Ten barcoded patient samples run together on one lane are still ten experimental units once demultiplexed. Pooling merges the biological material before any barcode is attached; once that happens, there is no computational step that can separate the contributions back out.
+    Multiplexing combines separately barcoded libraries onto the same sequencing run for efficiency. Demultiplexing recovers separate library measurements; whether these represent independent biological replicates depends on the study design. Samples from ten independent patients run together on one lane still represent ten independent biological units. Pooling biological material generally prevents separate measurement of individual contributions, unless these remain distinguishable through genetic differences or other identifiers.
 
 **Pseudoreplication in single-cell RNA-seq**
 
@@ -92,7 +106,14 @@ Unlike bulk RNA-seq, which measures average gene expression across thousands of 
 ![](figs_m1/03_pseudoreplication_single_cell_v02.jpg){width=95%}
 
 ??? example "Case study: Pseudoreplication in single-cell omics"
-    A reanalysis of a high-profile Alzheimer's disease scRNA-seq study illustrates the scale of the problem. The original analysis treated each cell as an independent observation, inflating the effective sample size from 60 donors to approximately 80,000 cells. When corrected using a pseudobulk approach — aggregating cells to the donor level before testing — the number of reported differentially expressed genes dropped from 1,031 to 26 at FDR < 0.01: a 549-fold inflation. The corrected analysis also pointed to a different, biologically more plausible cell type.
+     The study profiled approximately 80,000 nuclei from 48 individuals and
+    included both cell-level testing and a patient-level analysis. Using the
+    same processed data, a reanalysis compared the original cell-level results
+    with pseudobulk analysis, aggregating counts within each donor and cell type.
+    At FDR < 0.05, unique differentially expressed genes fell from 14,274 to 26.
+    Fewer discoveries alone do not prove false positives. However, randomly
+    reassigning patient labels still produced many discoveries with cell-level
+    testing, a pattern not seen with pseudobulk analysis.
 
     ![](figs_m1/01pseudoreplication__case_study_v02.png){width=100%}
 
@@ -104,7 +125,9 @@ Unlike bulk RNA-seq, which measures average gene expression across thousands of 
 
 !!! info "Module 1.2.4 takeaways"
     - Studies that lack appropriate experimental controls may be uninterpretable regardless of the analysis applied.
-    - Statistical inference should be performed at the level of the experimental unit. 
-    - Subsampling and pooling both break the independence assumption, inflating the effective sample size. 
-    - Multiplexing is not pooling. Barcoded samples run together on one sequencing lane remain independent experimental units after demultiplexing.
+    - Multiple measurements from the same experimental unit must not be
+    counted as independent replicates. The analysis can summarise measurements
+    within each unit or use a model that accounts for their dependence.
+    - Subsampling and pooling require careful counting of independent replicates. More measurements or more donors contributing to a pool do not necessarily mean more independent replicates. 
+    - Multiplexing preserves sample identity. Whether samples represent independent biological replicates depends on the study design.
 
