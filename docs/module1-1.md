@@ -186,6 +186,8 @@ Protein abundance alone does not capture activity. A protein can be present in a
 
 ### Layer 5: Metabolites (the metabolome)
 
+![](figs/1-1_metabolite.png){width="100%"}
+
 #### What is it?
 
 Metabolites are small molecules produced, consumed, or modified during cellular metabolism.
