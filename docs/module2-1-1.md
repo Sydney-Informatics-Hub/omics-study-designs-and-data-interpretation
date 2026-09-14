@@ -235,12 +235,14 @@ In **data-independent acquisition (DIA)**, the instrument fragments all ions wit
 
 <small>Comparison of DDA and DIA acquisition. In DDA, only precursor ions above an abundance cut-off in the MS1 scan are selected for fragmentation (MS2, synonymously MS/MS). Low-abundance peptides (grey) are never fragmented and so cannot be identified. In DIA, all precursors across predefined m/z windows are fragmented together regardless of abundance, giving every peptide in every window a fragmentation spectrum at each cycle.</small>
 
-!!! danger "The unrecoverable rule"
-    If an ion was never sampled and fragmented during acquisition, no downstream
-    analysis can reconstruct its identity or abundance from the raw data. Not
-    detected is not the same as not present. The acquisition mode chosen here
-    determines which ions are sampled and how consistently — and therefore which
-    molecules may be systematically absent from the data.
+!!! note "Absent proteins or a technical limit"
+    If an ion was never sampled and fragmented during acquisition (see grey examples in top left figure), no downstream
+    processing can identify its presence, identity, or abundance from the raw
+    data. This is worth factoring into your acquisition choice early,
+    particularly if you expect your proteins or metabolites of interest to be
+    present at low abundance. That said, absence of signal should not be read
+    as absence of the molecule: a non-detection can just as easily reflect the
+    limits of the acquisition mode as a true biological absence.
 
 This has direct consequences for missing value handling. In DDA, missingness is structured: low-abundance species are disproportionately likely to fall below the selection threshold, and selection itself is stochastic across runs. Missingness in mass spectrometry data can also arise from ionisation efficiency, chromatographic retention, matrix effects, and instrument sensitivity, making it non-random in ways that are not always predictable. Replacing missing values with the sample mean — or any naive imputation — treats absence as a random event and can distort exactly the low-abundance signal a discovery study is designed to detect ([Consideration 6](module1-2-3.md#consideration-6-data-quality-and-cleaning)). Understanding why values are missing
 requires knowing how the data were acquired.

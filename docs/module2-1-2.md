@@ -33,44 +33,43 @@ At the design stage, these relationships cannot be tested definitively because t
 
     For the following scenarios, walk through the decision tree above to classify each variable.
 
-    Scenario 1: Bacteria — Virulence Toxins & Disease Severity
+    ??? question "Scenario 1: Bacteria — Virulence Toxins & Disease Severity"
 
-    A researcher isolates Salmonella from patients with varying disease severity. She measures virulence toxin levels in each bacterial isolate and asks: do isolates with higher toxins cause more severe disease?
-    
-    **Predictor:** Protein expression
+        A researcher isolates Salmonella from patients with varying disease severity. She measures virulence toxin levels in each bacterial isolate and asks: do isolates with higher toxins cause more severe disease?
+        
+        **Predictor:** Protein expression
 
-    **Outcome:** Disease severity
+        **Outcome:** Disease severity
 
-    She identifies three variables that could influence her results:
+        She identifies three variables that could influence her results:
 
-    - **Host age** — Older patients tend to develop worse disease outcomes
-    - **Bacterial strain** — Different *Salmonella* strains have inherent virulence differences
-    - **Host immune response** — Patients mount antibody and cytokine responses to the toxins
-    
-    ??? "Answers"
-        - Host age → **Outcome covariate** (Doesn't affect bacterial toxin expression, but an effect immunity which worsens disease)
-        - Bacterial strain → **Confounder** (Some strains produce more toxins AND are inherently more virulent. But is not on the causal pathway. Proteins do not lead to strain, strain is predetermined by other factors)
-        - Host immune response → **Mediator** (toxins levels can directly trigger the immune cascade and how well that response is mounted effects the outcome. The toxin level can directly effect the cytokine levels of the how and in turn the outcome, putting it on the casual pathway)
+        - **Host age** — Older patients tend to develop worse disease outcomes
+        - **Bacterial strain** — Different *Salmonella* strains have inherent virulence differences
+        - **Host immune response** — Patients mount antibody and cytokine responses to the toxins
 
+        ??? example "Answers"
+            - Host age → **Outcome covariate** (Doesn't affect bacterial toxin expression, but an effect immunity which worsens disease)
+            - Bacterial strain → **Confounder** (Some strains produce more toxins AND are inherently more virulent. But is not on the causal pathway. Proteins do not lead to strain, strain is predetermined by other factors)
+            - Host immune response → **Mediator** (toxins levels can directly trigger the immune cascade and how well that response is mounted effects the outcome. The toxin level can directly effect the cytokine levels of the how and in turn the outcome, putting it on the casual pathway)
 
-    Scenario 2: Plant — Salt-Tolerance Genotype & Survival
+    ??? question "Scenario 2: Plant — Salt-Tolerance Genotype & Survival"
 
-    A researcher genotypes 40 plants of *Atriplex suberecta* for a SNP in a salt-tolerance gene. She then tracks plant survival and growth over one growing season in high-salinity coastal soils. Her question: does this genetic variant drive salt tolerance?
+        A researcher genotypes 40 plants of *Atriplex suberecta* for a SNP in a salt-tolerance gene. She then tracks plant survival and growth over one growing season in high-salinity coastal soils. Her question: does this genetic variant drive salt tolerance?
 
-    **Predictor:** Genotype
-    
-    **Outcome:** plant growth/survival
-    
-    She identifies four variables that could influence her results:
+        **Predictor:** Genotype
+        
+        **Outcome:** plant growth/survival
+        
+        She identifies four variables that could influence her results:
 
-    - **Water potential** — Water level/potential within the plant tissue 
-    - **Plant ecotype** — Plants are from three different local populations with known tolerance differences
-    - **Soil salinity** — Salt concentration (EC) varies across sites
-    
-    ??? "Answers"
-        - Water potential → **Mediator** (Genetics can influence water potential within the plant, which then directly affects plant survival in saline conditions, placing it on the causal pathway) 
-        - Plant ecotype → **Confounder** (different populations have different allele frequencies AND inherent tolerance differences, but the genotype does not cause the ecotype, taking it off the causal pathway)
-        - Soil salinity → **Covariate** (soil salinity is not associated with plant genotype, but directly stresses plants and affects survival)    
+        - **Water potential** — Water level/potential within the plant tissue 
+        - **Plant ecotype** — Plants are from three different local populations with known tolerance differences
+        - **Soil salinity** — Salt concentration (EC) varies across sites
+
+        ??? example "Answers"
+            - Water potential → **Mediator** (Genetics can influence water potential within the plant, which then directly affects plant survival in saline conditions, placing it on the causal pathway) 
+            - Plant ecotype → **Confounder** (different populations have different allele frequencies AND inherent tolerance differences, but the genotype does not cause the ecotype, taking it off the causal pathway)
+            - Soil salinity → **Covariate** (soil salinity is not associated with plant genotype, but directly stresses plants and affects survival)
 
 The figure below is reproduced from [Consideration 4](module1-2-2#consideration-4-batch-effects) in Module 1. Batch is the most common version of this problem, and the easiest to draw.
 
@@ -230,8 +229,22 @@ The table below compares the three allocation strategies across five properties.
 | **Statistical power** | Reduced | Typically highest | Good |
 | **When to use** | Never | Preferred for any named factor | When the factor cannot be named in advance |
 
-!!! question "Activity PLACEHOLDER"
-    Open module 2 activity in your browser. 
+!!! question "Activity: Design the allocation"
+
+    A researcher has 24 samples (12 treated, 12 control) to process for RNA-seq. Library preparation will run across 3 batches of 8 samples each, over 3 separate days. She also knows that 14 of her 24 samples are male and 10 are female.
+
+    For each proposed allocation below, decide whether it is confounded, blocked, or randomised, and identify any remaining risk.
+
+    1. Batch 1: all 8 treated males. Batch 2: remaining 4 treated + 4 control males. Batch 3: all 8 control females.
+    2. Each batch contains 4 treated and 4 control samples, with sex distributed as evenly as possible across batches.
+    3. Samples are assigned to batches using a random number generator, with no constraint on sex or condition.
+    4. Given these 24 samples and known sex split, why is option 2 the strongest design overall?
+
+    ??? example "Answers"
+        1. **Confounded.** Batch and condition are almost inseparable here: batch 1 is entirely treated, batch 3 is entirely control, and sex tracks along with them. No analysis can distinguish a batch effect from a treatment effect or a sex effect in this design.
+        2. **Blocked.** Condition is balanced within every batch, and sex is also deliberately distributed. Both factors are named and controlled for in advance, so the batch effect is estimable independently of condition and sex.
+        3. **Randomised.** With only 24 samples split across 3 batches, chance allocation may still produce imbalance, particularly on sex, which was not explicitly stratified. This design is reasonable if sex could not be anticipated as relevant, but stratified randomisation (blocking on sex, randomising the rest) would be a safer choice given that the sex split is already known.
+        4. Option 2 is strongest because both condition and sex were known in advance, so there was no need to leave their balance to chance. Randomisation (option 3) only becomes reliable at much larger sample sizes; with just 24 samples split across 3 batches, an unlucky draw can easily leave sex or condition unevenly spread. Blocking removes that risk for the factors named here. This does not make option 2 risk-free: blocking only protects against factors that were anticipated and named. Any unmeasured factor, such as a reagent lot change or an operator effect, could still align with the comparison. This is why, even within a blocked design, processing order and other unnamed variables should still be randomised.
 
 !!! info "Module 2.1.2 takeaways"
     - Sampling bias and batch effects are the same structural failure: an unmeasured variable aligned with the groups being compared.
