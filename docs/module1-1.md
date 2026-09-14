@@ -155,6 +155,8 @@ RNA abundance does not reliably predict protein abundance. Post-transcriptional 
 
 ### Layer 4: Proteins (the proteome)
 
+![](figs/1-1_protein.png){width="100%"}
+
 #### What is it?
 
 Proteins are the major functional molecules of the cell. They catalyse the biochemical reactions that sustain life, form the structural scaffolds of cells and tissues, transmit signals, transport molecules, and regulate gene expression. The proteome is the complete set of proteins present in a cell, tissue, or organism at a given time.
