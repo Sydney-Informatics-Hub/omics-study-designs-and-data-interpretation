@@ -1,5 +1,9 @@
    Download the activities page 
-<a href="../Activities-webR/module3/Module3_WebR-app-MetaData-v18.html" target="_blank">
+
+Path of the webR page 
+Activities-webR/module3/Module3_WebR-app-MetaData-v55.html
+
+<a href="../Activities-webR/module3/Module3_WebR-app-MetaData-v55.html" target="_blank">
 <button style="background-color: blue; color: white;">
     ⬇ Download HTML
   </button>
