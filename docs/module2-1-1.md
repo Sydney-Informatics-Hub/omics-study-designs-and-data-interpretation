@@ -153,7 +153,7 @@ The choice follows from the biological question. Quantifying gene expression or 
     2. Assembling a small bacterial genome with numerous structural rearrangements.
     3. Assembling a large vertebrate genome from scratch (de novo).
 
-    ??? success "Answers: reveal after group discussion"
+    ??? success "Answers:"
         1. Short reads: low cost per base provides the depth needed to call a rare variant confidently.
         2. Long reads: spanning structural rearrangements needs a single read crossing it to resolve reliably. High coverage and accuracy can still be provided with long reads alone, given small genomes (e.g. of some prokaryotes).
         3. Both! This hybrid approach uses long reads to resolve the genome's repeat regions and structural rearrangements, while short reads allow for affordable and high-accuracy polishing.
@@ -253,7 +253,7 @@ requires knowing how the data were acquired.
     2. Resolving subtle abundance changes across 6 replicate cell cultures before and after drug treatment.
     3. Profiling 15 samples from a developmental time course with only one day of instrument time available.
 
-    ??? success "Answers: reveal after group discussion"
+    ??? success "Answers:"
         1. Label-free: 150 samples exceeds any labelling scheme's multiplexing capacity, and discovery work benefits from an unrestricted sample number.
         2. Labelled: few samples fit easily within one set, and eliminating run-to-run variation is needed to resolve subtle, precise differences.
         3. Labelled: multiplexing 15 samples into one set cuts the number of runs needed, fitting the limited instrument time.

@@ -11,7 +11,7 @@
 
 When two variables are perfectly aligned in a dataset, they are *confounded*. No comparison within that dataset can attribute a difference to one rather than the other, because there is no case where they vary independently.
 
-Not every variable associated with an omics measurement is a confounder. A covariate is any measured variable that may need to be described, balanced, or included in the analysis, such as age, sex, site, or processing batch. A covariate becomes a confounder when it is associated with both the omics measurement and the outcome being compared, and is not part of the biological pathway between them. A mediator is different: it lies on the causal pathway from the omics measurement to the outcome. Adjusting for a mediator can remove part of the biological effect the study is trying to measure.
+Not every variable associated with an omics measurement is a confounder. A covariate is any measured variable that may need to be described, balanced, or included in the analysis, such as age, sex, site, or processing batch. A covariate becomes a confounder when it is associated with both the omics measurement and the outcome being compared, and is not part of the biological pathway between them. A mediator is different: it lies on the causal pathway from the omics measurement to the outcome. Adjusting for a mediator can remove part of the biological effect the study is trying to measure. The casual pathway is best to think as influenced by time, does the predictor come first leading, influence the variable and in turn studied outcome (predictor -> variable -> outcome). 
 
 Identifying which role a variable plays matters for both accuracy and interpretability. An unrecognised confounder can create a false positive, hide a real effect, or make an effect size appear larger or smaller than it really is, so the numerical result is inaccurate. Treating a mediator as a confounder creates a different problem where the analysis may adjust away part of the biological mechanism under study, making the result harder to interpret. The goal is not to include every available variable in a model, but to decide which variables need to be balanced, recorded, adjusted for, or left out because of their relationship to youre trait or interest and overall study question.
 
@@ -29,6 +29,49 @@ At the design stage, these relationships cannot be tested definitively because t
 
     When batch and biological group are perfectly aligned, there is no way to determine which differences are technical and which are real. This design is unrecoverable. When cases and controls are distributed across batches, the batch effect is estimable independently of the biological comparison and can be corrected statistically.
 
+!!! question "Activity: Variable Decision Tree"
+
+    For the following scenarios, walk through the decision tree above to classify each variable.
+
+    Scenario 1: Bacteria — Virulence Toxins & Disease Severity
+
+    A researcher isolates Salmonella from patients with varying disease severity. She measures virulence toxin levels in each bacterial isolate and asks: do isolates with higher toxins cause more severe disease?
+    
+    **Predictor:** Protein expression
+
+    **Outcome:** Disease severity
+
+    She identifies three variables that could influence her results:
+
+    - **Host age** — Older patients tend to develop worse disease outcomes
+    - **Bacterial strain** — Different *Salmonella* strains have inherent virulence differences
+    - **Host immune response** — Patients mount antibody and cytokine responses to the toxins
+    
+    ??? "Answers"
+        - Host age → **Outcome covariate** (Doesn't affect bacterial toxin expression, but an effect immunity which worsens disease)
+        - Bacterial strain → **Confounder** (Some strains produce more toxins AND are inherently more virulent. But is not on the causal pathway. Proteins do not lead to strain, strain is predetermined by other factors)
+        - Host immune response → **Mediator** (toxins levels can directly trigger the immune cascade and how well that response is mounted effects the outcome. The toxin level can directly effect the cytokine levels of the how and in turn the outcome, putting it on the casual pathway)
+
+
+    Scenario 2: Plant — Salt-Tolerance Genotype & Survival
+
+    A researcher genotypes 40 plants of *Atriplex suberecta* for a SNP in a salt-tolerance gene. She then tracks plant survival and growth over one growing season in high-salinity coastal soils. Her question: does this genetic variant drive salt tolerance?
+
+    **Predictor:** Genotype
+    
+    **Outcome:** plant growth/survival
+    
+    She identifies four variables that could influence her results:
+
+    - **Water potential** — Water level/potential within the plant tissue 
+    - **Plant ecotype** — Plants are from three different local populations with known tolerance differences
+    - **Soil salinity** — Salt concentration (EC) varies across sites
+    
+    ??? "Answers"
+        - Water potential → **Mediator** (Genetics can influence water potential within the plant, which then directly affects plant survival in saline conditions, placing it on the causal pathway) 
+        - Plant ecotype → **Confounder** (different populations have different allele frequencies AND inherent tolerance differences, but the genotype does not cause the ecotype, taking it off the causal pathway)
+        - Soil salinity → **Covariate** (soil salinity is not associated with plant genotype, but directly stresses plants and affects survival)    
+
 The figure below is reproduced from [Consideration 4](module1-2-2#consideration-4-batch-effects) in Module 1. Batch is the most common version of this problem, and the easiest to draw.
 
 ![Confounded vs distributed design: the biological groups either travel with the factor or across it](figs_m1/01_batch_Effect_v02.png){width=90%}
@@ -45,8 +88,6 @@ In the confounded design, cases and controls were processed in separate batches.
 | **Plate position** | Cases in columns 1–4, controls in 5–8 |
 | **Operator / sequencing run** | One group processed by one person or on one flow cell |
 
-!!! question "Activity PLACEHOLDER"
-    Identify the something.  
 
 ---
 ## Design approaches to mitigate confounding and batch effects
