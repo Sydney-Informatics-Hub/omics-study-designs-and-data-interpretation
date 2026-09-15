@@ -447,7 +447,7 @@ body {overflow:auto} .app{display:block;max-width:1150px;margin:auto} main{paddi
 <header class="sample-guide-header"><h1>Sample Sheet guide: a guided design check on the sample sheet, before anything is processed</h1><span class="busy" id="busy" role="status"></span></header>
 <div class="app"><main><nav class="progress" id="progress" aria-label="Activity steps"></nav><div id="werror" role="alert"></div>
 <section class="step on" id="step-1"><div class="panel"><h2>1 · Upload your metadata</h2><p>Start with your sample sheet. Omics measurements are not <button type="button" id="thresholdToggle" aria-label="Show screening thresholds" aria-expanded="false" aria-controls="thresholdInfo">required</button>.</p><div id="thresholdInfo" hidden><h3>Screening thresholds</h3><table><thead><tr><th>Q1 comparison</th><th>Association measure</th><th>Priority</th></tr></thead><tbody><tr><td>Categorical–categorical</td><td>Cramér’s V</td><td>≥ 0.40</td></tr><tr><td>Categorical–continuous</td><td>Eta</td><td>≥ 0.40</td></tr><tr><td>Continuous–continuous</td><td>Absolute Spearman correlation</td><td>≥ 0.40</td></tr></tbody></table><p>If no variable meets the main threshold, associations from 0.20 to below 0.40 are shown. These are teaching priorities, not proof of confounding. SMD and Duncan do not select variables at Q1.</p><p>After Q2/Q3 flag a potential confounder, examine shared categories and distributions/ranges. SMD and Duncan support imbalance assessment. High imbalance or correlation alone does not establish complete confounding.</p><p>Q1 is descriptive: related specimens remain in the screen, so biological units contributing more specimens may influence it more. Technical repeats are counted once using specimen ID where available. When “Same specimen” is selected without specimen IDs, the biological-unit ID is used.</p></div><div class="wform"><button class="btn primary" id="demoBtn">Load workshop sheet</button><label for="fileIn">Upload CSV or TSV</label><input type="file" id="fileIn" accept=".csv,.tsv,.txt"><label for="pasteIn">Or paste a table, including its header</label><textarea id="pasteIn" rows="4"></textarea><button class="btn" id="pasteBtn">Load pasted text</button><p id="dataNote" role="status">No sheet loaded.</p></div><div id="preview"></div></div></section>
-<section class="step" id="step-2"><div class="panel"><h2>2 · Map the key columns</h2><div class="wform"><label for="specimenMap">Sample/specimen ID (may repeat across measurement rows)</label><select id="specimenMap"></select><label for="mapUnit">Biological-unit identifier (person, animal, plant…)</label><select id="mapUnit"></select><label for="mapCond">Phenotype / outcome of interest</label><select id="mapCond"></select></div></div></section>
+<section class="step" id="step-2"><div class="panel"><h2>2 · Map the key columns</h2><div class="wform"><label for="specimenMap">Sample/specimen ID — optional (may repeat across measurement rows)</label><select id="specimenMap" aria-describedby="specimenMapHelp"></select><p class="whelp" id="specimenMapHelp">Optional. Select the column that identifies the specimen measured. If there is one specimen per biological unit, this can be the same column used for biological unit ID.</p><label for="mapUnit">Biological-unit identifier (person, animal, plant…)</label><select id="mapUnit"></select><label for="mapCond">Phenotype / outcome of interest</label><select id="mapCond"></select></div></div></section>
 <section class="step" id="step-3"><div class="panel"><h2>3 · Choose variables to screen</h2><p>Choose metadata variables and check their types. Identifiers and the outcome are not screened as candidate variables.</p><button class="btn" id="allOn">Select all eligible</button> <button class="btn" id="allOff">Clear selection</button><div class="varlist" id="varList"></div></div></section>
 <section class="step" id="step-4"><div class="panel"><h2>4 · How are your samples related?</h2><div id="sampling"></div></div></section>
 <section class="step" id="step-5"><div class="panel"><h2>5 · Assess possible variable roles</h2><div id="assessment"></div></div></section>
@@ -629,13 +629,36 @@ ss_nesting <- function() {
        nCond = nc, nSpanning = span, shape = shape)
 }
 
+## ---- record identifiers -----------------------------------------
+## Mapping a sample/specimen column is optional. With none mapped the app
+## names the rows itself (S001, S002 ...) so every record can still be
+## referred to in tables and reports.
+##
+## A generated ID carries no information that was not already in the sheet:
+## it says "this is row 7", not "row 7 is a distinct specimen". So it is
+## deliberately kept out of the repeat logic below -- it never collapses
+## technical repeats and never answers the step-4 question on the user's
+## behalf. Both of those still need a real specimen column.
+ss_specimen_col <- function() {
+  s <- if (exists("cfg_specimen")) cfg_specimen else ""
+  if (length(s) == 1 && !is.na(s) && nzchar(s) &&
+      !is.null(SS$sheet) && s %in% names(SS$sheet)) s else NA_character_
+}
+ss_auto_ids <- function(n) {
+  if (n < 1) return(character(0))
+  sprintf("S%0*d", max(3L, nchar(as.character(n))), seq_len(n))
+}
+ss_record_ids <- function() {
+  s <- ss_specimen_col()
+  if (!is.na(s)) as.character(SS$sheet[[s]]) else ss_auto_ids(nrow(SS$sheet))
+}
+
 ## ---- descriptive specimen frame --------------------------------
 ## Keep biological observations. Collapse only declared technical repeats.
 ss_frame <- function() {
   df <- SS$sheet; held <- character(0); note <- "Specimen records retained. Related observations are not independent."
   mode <- if (exists("cfg_repeat")) cfg_repeat else ""
-  specimen <- if (exists("cfg_specimen")) cfg_specimen else ""
-  keyfield <- if (nzchar(specimen) && specimen %in% names(df)) specimen else NA_character_
+  keyfield <- ss_specimen_col()
   if (mode == "technical" && is.na(keyfield)) keyfield <- SS$cfg$unit
   if (mode %in% c("technical", "mixed") && !is.na(keyfield)) {
     key <- df[[keyfield]]
@@ -1100,8 +1123,9 @@ ss_design <- function() {
       keep <- !is.na(g) & g == L
       list(level = L, rows = sum(keep), units = length(unique(uu[keep & !is.na(uu)])))
     })
+    rid <- ss_record_ids(); scol <- ss_specimen_col()
     missingRows <- lapply(missing, function(i) list(row = i,
-      sample = if (is.na(SS$cfg$id)) NA_character_ else df[[SS$cfg$id]][i], unit = uu[i]))
+      sample = rid[i], unit = uu[i]))
     repeated <- eligible & duplicated(kk$key)
     involved <- which(eligible & (duplicated(kk$key) | duplicated(kk$key, fromLast = TRUE)))
     involved <- involved[order(kk$key[involved], involved)]
@@ -1114,6 +1138,8 @@ ss_design <- function() {
       eligibleRows = sum(eligible), missingCond = length(missing),
       missingUnitRows = if (is.na(u)) 0L else sum(is.na(uu) & (is.na(cnd) | !is.na(g))),
       missingRows = missingRows, nCond = length(lev), perCond = percond,
+      recordIdAuto = is.na(scol), recordIdCol = scol,
+      recordIdExample = if (length(rid)) rid[1] else NA_character_,
       nkey = nkey, extraRows = sum(eligible) - nkey, paired = kk$paired)
     if (is.na(u)) return(ok(base))
     nst <- ss_nesting(); per <- as.numeric(nst$per)
@@ -1856,7 +1882,7 @@ async function renderAll(){
  $$('.step').forEach((s,i)=>s.classList.toggle('on',i+1===W.page));
  $('#back').disabled=W.page===1;$('#next').hidden=W.page===6;$('#next').disabled=W.page===5&&W.phase==='q2'?false:!!gate(W.page+1);$('#navHint').textContent=W.page===5&&W.phase==='q2'?'':gate(W.page+1);$('#next').textContent=W.page===5?(W.phase==='q2'?'Next: pathway question →':'Next: summary →'):'Next →';
  if(W.page===1&&S.nrow){const h=await rjson('ss_head(30, "", FALSE)');$('#preview').innerHTML='<p>'+S.nrow+' records · '+S.fields.length+' columns. Preview: first '+arr(h.rows).length+' rows.</p><div class="scroll"><table><thead><tr>'+arr(h.fields).map(f=>'<th>'+esc(f)+'</th>').join('')+'</tr></thead><tbody>'+arr(h.rows).map(r=>'<tr>'+arr(r).map(v=>'<td>'+esc(v??'—')+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';}
- if(W.page===2){fillSelect($('#mapUnit'),S.map.unit,'— no unit column —');fillSelect($('#mapCond'),S.map.cond,'— choose outcome —');fillSelect($('#specimenMap'),W.sample.specimen,'— not separately recorded —');}
+ if(W.page===2){fillSelect($('#mapUnit'),S.map.unit,'— no unit column —');fillSelect($('#mapCond'),S.map.cond,'— choose outcome —');fillSelect($('#specimenMap'),W.sample.specimen,'— none: give each row an automatic ID —');$('#specimenMapHelp').innerHTML=specimenHelp();}
 
  if(W.page===3) renderVariables();
  if(W.page===4) renderSampling();
@@ -1867,11 +1893,16 @@ async function go(n){if(gate(n))throw Error(gate(n));if(n>=5&&!W.confirmed){vali
 function renderVariables(){
  $('#varList').innerHTML=S.fields.filter(f=>![S.map.id,S.map.unit,S.map.cond,W.sample.specimen].includes(f)).map(f=>{const m=S.meta.find(m=>m.name===f);return '<div class="varrow"><input aria-label="Screen '+esc(f)+'" type="checkbox" data-include="'+esc(f)+'" '+(S.include.has(f)?'checked':'')+'><span class="nm">'+esc(f)+'<small>'+m.distinct+' values · '+fmt(m.missing*100,0)+'% missing</small></span><select aria-label="Type of '+esc(f)+'" data-type="'+esc(f)+'">'+TYPES.map(t=>'<option value="'+t+'"'+(S.types[f]===t?' selected':'')+(['continuous','ordinal'].includes(t)&&!m.numeric?' disabled':'')+'>'+t+'</option>').join('')+'</select></div>';}).join('');
 }
+const SPECIMEN_HELP='Optional. Select the column that identifies the specimen measured. If there is one specimen per biological unit, this can be the same column used for biological unit ID.';
+function specimenHelp(){
+ if(W.sample.specimen)return SPECIMEN_HELP;
+ const eg=S.design?.recordIdExample;
+ return SPECIMEN_HELP+' <b>No column selected:</b> each row is given an automatic identifier'+(eg?' ('+esc(eg)+', '+esc(eg.replace(/\d+$/,m=>String(+m+1).padStart(m.length,'0')))+', …)':'')+'. Automatic IDs name records only. ';}
 function selectHTML(id,label,choices,value){return '<label for="'+id+'">'+label+'</label><select id="'+id+'"><option value="">— choose —</option>'+choices.map(([v,l])=>'<option value="'+v+'"'+(value===v?' selected':'')+'>'+l+'</option>').join('')+'</select>';}
 function renderSampling(){
  const c=S.counts||{},s=W.sample;
  if(!c.mapped){$('#sampling').innerHTML='<p>Map a biological-unit ID in step 2 so the app can detect repeated rows.</p>';return;}
- $('#sampling').innerHTML='<p><b>'+c.units+' biological units</b> across '+c.validRows+' rows with known IDs.</p>'+(c.missingUnit?'<p>'+c.missingUnit+' rows have no biological-unit ID.</p>':'')+(c.extra===0?'<p>No biological-unit ID repeats. No follow-up is needed; select Next.</p>':'<p>'+c.repeatedUnits+' biological units have several rows ('+c.extra+' additional rows).</p><div class="wform">'+selectHTML('repeatMeaning','Do these repeated rows come from the same specimen or different specimens?',[['technical','Same specimen'],['specimens','Different specimens, collection times or tissue sites'],['mixed','Mixed — both same and different specimens'],['unsure','Unsure']],s.repeat)+'</div>');
+ $('#sampling').innerHTML='<p><b>'+c.units+' biological units</b> across '+c.validRows+' rows with known IDs.</p>'+(c.missingUnit?'<p>'+c.missingUnit+' rows have no biological-unit ID.</p>':'')+(c.extra===0?'<p>No biological-unit ID repeats. No follow-up is needed; select Next.</p>':'<p>'+c.repeatedUnits+' biological units have several rows ('+c.extra+' additional rows).</p><div class="wform">'+selectHTML('repeatMeaning','Do these repeated rows come from the same specimen or different specimens?',[['technical','Same specimen'],['specimens','Different specimens, collection times or tissue sites'],['mixed','Mixed — both same and different specimens'],['unsure','Unsure']],s.repeat)+'</div>')+(S.design?.recordIdAuto&&c.extra>0?'<p class="whelp">No sample/specimen column is mapped, so records carry automatic one-per-row IDs. Those cannot tell a technical repeat from a distinct specimen — answer from what you know about how the samples were collected.</p>':'');
 }
 function validateSampling(){const c=S.counts||{};if(!c.mapped)throw Error('Map the biological-unit ID in step 2.');if(c.extra===0){W.sample.repeat='none';return;}if(!W.sample.repeat||W.sample.repeat==='none')throw Error('Choose what the repeated rows represent.');}
 function rows(){return S.fields.filter(f=>S.include.has(f)&&f!==W.sample.specimen).map(f=>arr(S.screen?.rows).find(r=>r.field===f)||{field:f,metric:'',effect:null,n:0,kind:'held',cls:{code:'untestable'}});}
@@ -1919,7 +1950,7 @@ function reportHTML(){
  rr.forEach(r=>{const a=answer(r.field);if(unavailable(r)){groups.unassessed.push(r);return;}if(a.stale){groups.unresolved.push(r);return;}if(q1(r)==='no'&&!a.q2){groups.quiet.push(r);return;}if(!a.q2||(a.q2==='yes'&&(!a.q3||a.q3==='unsure'))){groups.unresolved.push(r);return;}if(a.q2==='no'){groups.covariate.push(r);return;}if(a.q3==='yes'){groups.mediator.push(r);return;}if(q1(r)==='no'){groups.nonconf.push(r);return;}groups[r.cls?.code==='entangled'?'aligned':r.cls?.code==='nooverlap'?'poor':'overlap'].push(r);});
  let technical='Not determined',repeated='Not determined';
  if(c.extra===0){technical=0;repeated=0;}else if(W.sample.repeat==='technical'){technical=c.extra;repeated=0;}else if(W.sample.repeat==='specimens'){technical=0;repeated=c.extra;}else if(W.sample.repeat==='mixed'&&c.specimenComplete){technical=c.withinSpecimen+' possible';repeated=c.betweenSpecimen;}else if(W.sample.repeat==='platforms'){technical='Not classified as technical repeats';repeated='Different assays: '+c.extra+' additional rows';}
- const counts=[['Biological units (unique '+S.map.unit+' values)',c.units??'Not mapped'],['Biological units represented in the outcome comparison; '+(d.noCond||0)+' have no known outcome',d.comparisonUnits??'—'],['Rows with known outcome / total rows; '+(d.missingCond||0)+' excluded for missing outcome',(S.nrow-(d.missingCond||0))+'/'+S.nrow],['Technical/process replicate rows beyond the first',technical],['Repeated/nested observation rows beyond the first',repeated]];
+ const counts=[['Record identifier',d.recordIdAuto?'Generated, one per row (no sample/specimen column mapped)':(d.recordIdCol||W.sample.specimen||'Not mapped')],['Biological units (unique '+S.map.unit+' values)',c.units??'Not mapped'],['Biological units represented in the outcome comparison; '+(d.noCond||0)+' have no known outcome',d.comparisonUnits??'—'],['Rows with known outcome / total rows; '+(d.missingCond||0)+' excluded for missing outcome',(S.nrow-(d.missingCond||0))+'/'+S.nrow],['Technical/process replicate rows beyond the first',technical],['Repeated/nested observation rows beyond the first',repeated]];
  function group(title,list,description){return '<section class="summary-group"><h3>'+title+'<span class="group-count">'+list.length+'</span></h3><p>'+description+'</p>'+(list.length?'<ul>'+list.map(r=>'<li>'+esc(r.field)+'</li>').join('')+'</ul>':'<p>None flagged.</p>')+'</section>';}
  const missing=rr.filter(r=>Number.isFinite(r.missGap)&&r.missGap>=.15);
  let h='<p><b>Sheet:</b> '+esc(S.name)+' · <b>Outcome:</b> '+esc(S.map.cond)+'</p><h2>1 · How many biological units and observations are represented? <small>Module 1</small></h2><table><thead><tr><th>Design element</th><th>Result</th></tr></thead><tbody>'+counts.map(([k,v])=>'<tr><td>'+esc(k)+'</td><td><b>'+esc(v)+'</b></td></tr>').join('')+'</tbody></table>'+(c.missingUnit?'<p>'+c.missingUnit+' records have missing biological-unit IDs and cannot be assigned to a unit.</p>':'')+'<p>'+esc(S.screen?.note||'')+' Biological units contributing more specimens may influence this descriptive screen more. Related samples need to be accounted for in later analysis.</p><h2>2 · What may complicate the comparison <small>Module 2</small></h2><div class="stats">'+[['aligned','Complete alignment'],['overlap','Potential confounders: no separation flagged'],['poor','Potential confounders with limited overlap'],['mediator','Possible mediators'],['covariate','Outcome-associated covariates'],['unresolved','Unresolved']].map(([k,l])=>'<div><b>'+groups[k].length+'</b>'+l+'</div>').join('')+'</div><h3 class="confounding-heading">Confounding problems</h3>';
