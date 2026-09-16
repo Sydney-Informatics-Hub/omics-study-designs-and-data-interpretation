@@ -6,7 +6,7 @@
 
 In Module 1 and Module 2, we looked at the omics layers, the key design considerations, and the trade-offs between accuracy, interpretability, power, cost, and generalisability. Module 3 brings those ideas together by asking how to diagnose whether a study is asking the right question, measuring the right thing, and designing around the right constraints.
 
-## Recap: a mental model checklist
+To support tying together some of the earlier cocepts we have made a mental model checklist
 
 | Criterion | Question | Considerations |
 |---|---|---|
