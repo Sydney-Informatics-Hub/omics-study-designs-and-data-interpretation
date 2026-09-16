@@ -4,7 +4,7 @@ This workshop introduces you to the principles and practices needed to design om
 
 - [Module 1](module1-1.md): Understanding molecular layers
 - [Module 2](module2-0.md): Designing robust studies 
-- [Module 3](): Applying experimental design principles 
+- [Module 3](module3-0.md): Applying experimental design principles 
 
 ## Background 
 
